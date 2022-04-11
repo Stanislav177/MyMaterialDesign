@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -11,6 +12,7 @@ import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.databinding.FragmentMainBinding
 import com.example.mymaterialdesign.viewModel.MainViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -20,6 +22,8 @@ class MainFragment : Fragment() {
     private val liveData: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
+
+    lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +40,7 @@ class MainFragment : Fragment() {
             renderData(it)
         })
         liveData.request()
+
     }
 
     private fun renderData(appStatePictureOfTheDay: AppStatePictureOfTheDay) {
@@ -47,12 +52,20 @@ class MainFragment : Fragment() {
             is AppStatePictureOfTheDay.Loading -> {
             }
             is AppStatePictureOfTheDay.Success -> {
-                binding.imageToDay.load(appStatePictureOfTheDay.pdoServerResponse.url)
-                {
-                    placeholder(R.drawable.ic_no_photo_vector)
-                }
+                setInfoDisplay(appStatePictureOfTheDay)
             }
         }
+    }
+
+    private fun setInfoDisplay(appStatePictureOfTheDay: AppStatePictureOfTheDay.Success) {
+        binding.imageToDay.load(appStatePictureOfTheDay.pdoServerResponse.url) {
+            placeholder(R.drawable.ic_no_photo_vector)
+        }
+
+        binding.includeMainFragment.title.text =
+            appStatePictureOfTheDay.pdoServerResponse.title
+        binding.includeMainFragment.explanation.text =
+            appStatePictureOfTheDay.pdoServerResponse.explanation
     }
 
     override fun onDestroy() {

@@ -17,5 +17,9 @@
 
     </LinearLayout>
 
+    <include
+        android:id="@+id/includeMainFragment"
+        layout="@layout/bottom_sheet_layout" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
