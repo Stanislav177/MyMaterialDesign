@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -12,7 +11,6 @@ import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.databinding.FragmentMainBinding
 import com.example.mymaterialdesign.viewModel.MainViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -22,8 +20,6 @@ class MainFragment : Fragment() {
     private val liveData: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
-
-    lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +37,17 @@ class MainFragment : Fragment() {
         })
         liveData.request()
 
+        searchWiki()
+    }
+
+    private fun searchWiki() {
+        binding.layoutSearchWiki.setEndIconOnClickListener {
+            liveData.getStartIntent(binding.textSearchWiki.text.toString(), requireContext())
+//            startActivity(Intent(Intent.ACTION_VIEW).apply {
+//                data =
+//                    Uri.parse("https://ru.wikipedia.org/wiki/${binding.textSearchWiki.text.toString()}")
+//            })
+        }
     }
 
     private fun renderData(appStatePictureOfTheDay: AppStatePictureOfTheDay) {

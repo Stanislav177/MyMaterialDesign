@@ -1,5 +1,9 @@
 package com.example.mymaterialdesign.viewModel
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +23,13 @@ class MainViewModel(
 
     fun getLiveData(): LiveData<AppStatePictureOfTheDay> {
         return liveData
+    }
+
+    fun getStartIntent(textSearch: String, context: Context){
+        context.startActivity(Intent(Intent.ACTION_VIEW).apply {
+            data =
+                Uri.parse("https://ru.wikipedia.org/wiki/${textSearch}")
+        })
     }
 
     fun request() {
