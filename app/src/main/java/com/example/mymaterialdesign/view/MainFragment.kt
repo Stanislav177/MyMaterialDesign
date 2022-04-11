@@ -5,12 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import coil.load
+import com.example.mymaterialdesign.R
+import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.databinding.FragmentMainBinding
+import com.example.mymaterialdesign.viewModel.MainViewModel
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
         get() = _binding!!
+
+    private val liveData: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,6 +28,31 @@ class MainFragment : Fragment() {
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        liveData.getLiveData().observe(viewLifecycleOwner, {
+            renderData(it)
+        })
+        liveData.request()
+    }
+
+    private fun renderData(appStatePictureOfTheDay: AppStatePictureOfTheDay) {
+        when (appStatePictureOfTheDay) {
+            is AppStatePictureOfTheDay.Error -> {
+            }
+            is AppStatePictureOfTheDay.ErrorCode -> {
+            }
+            is AppStatePictureOfTheDay.Loading -> {
+            }
+            is AppStatePictureOfTheDay.Success -> {
+                binding.imageToDay.load(appStatePictureOfTheDay.pdoServerResponse.url)
+                {
+                    placeholder(R.drawable.ic_no_photo_vector)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

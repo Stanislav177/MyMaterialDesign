@@ -13,7 +13,7 @@ import retrofit2.Response
 
 class MainViewModel(
     private val liveData: MutableLiveData<AppStatePictureOfTheDay> = MutableLiveData(),
-    private var pictureOfTheDayImpl: PictureOfTheDayImpl
+    private val pictureOfTheDayImpl: PictureOfTheDayImpl = PictureOfTheDayImpl()
 ) : ViewModel() {
 
 
@@ -44,7 +44,6 @@ class MainViewModel(
                 override fun onFailure(call: Call<PDOServerResponse>, t: Throwable) {
                     liveData.postValue(AppStatePictureOfTheDay.Error(t))
                 }
-
             }
         )
     }
