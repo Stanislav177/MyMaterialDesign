@@ -22,6 +22,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("appKey.properties").newInputStream())
+        def nasaApiKey = properties.getProperty("API_KEY_NASA", " ")
+        it.buildConfigField "String", "API_KEY_NASA", nasaApiKey
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
