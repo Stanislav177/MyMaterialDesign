@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F8F8F8"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="?actionBarSize"
+    app:behavior_peekHeight="70dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <View

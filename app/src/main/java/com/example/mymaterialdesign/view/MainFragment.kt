@@ -1,9 +1,8 @@
 package com.example.mymaterialdesign.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -38,6 +37,31 @@ class MainFragment : Fragment() {
         liveData.request()
 
         searchWiki()
+        setOptionsMenu()
+        initBtnFAB()
+
+        binding.today.setOnClickListener {
+            Toast.makeText(context, "today", Toast.LENGTH_LONG).show()
+        }
+        binding.yesterday.setOnClickListener {
+            Toast.makeText(context, "yesterday", Toast.LENGTH_LONG).show()
+        }
+        binding.beforeYesterday.setOnClickListener {
+            Toast.makeText(context, "beforeYesterday", Toast.LENGTH_LONG).show()
+        }
+
+
+    }
+
+    private fun initBtnFAB() {
+        binding.fab.setOnClickListener {
+            Toast.makeText(context, "FAB", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun setOptionsMenu() {
+        (requireActivity() as MainActivity).setSupportActionBar(binding.appBarBottom)
+        setHasOptionsMenu(true)
     }
 
     private fun searchWiki() {
@@ -73,6 +97,23 @@ class MainFragment : Fragment() {
             appStatePictureOfTheDay.pdoServerResponse.title
         binding.includeMainFragment.explanation.text =
             appStatePictureOfTheDay.pdoServerResponse.explanation
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.app_bar_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.setting -> {
+                Toast.makeText(context, "Setting", Toast.LENGTH_LONG).show()
+            }
+            android.R.id.home -> {
+                Toast.makeText(context, "Home", Toast.LENGTH_LONG).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

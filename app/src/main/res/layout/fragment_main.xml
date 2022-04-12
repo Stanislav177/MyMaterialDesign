@@ -30,6 +30,40 @@
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipsGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/today"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Сегодняшняя" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/yesterday"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Вчерашняя" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/beforeYesterday"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Позaвчерашняя" />
+
+
+        </com.google.android.material.chip.ChipGroup>
+
         <com.example.mymaterialdesign.utils.EquilateralImageView
             android:id="@+id/imageToDay"
             android:layout_width="match_parent"
@@ -42,5 +76,21 @@
         android:id="@+id/includeMainFragment"
         layout="@layout/bottom_sheet_layout" />
 
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/appBarBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/black"
+        app:fabAlignmentMode="center"
+        app:navigationIcon="@drawable/ic_hamburger_menu_bottom_bar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/purple_700"
+        app:layout_anchor="@+id/appBarBottom"
+        app:srcCompat="@drawable/ic_plus_fab" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
