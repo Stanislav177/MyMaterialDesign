@@ -4,7 +4,7 @@
     android:id="@+id/bottomSheetConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
+    android:background="@color/fon_bottom_sheet"
     app:behavior_hideable="false"
     app:behavior_peekHeight="88dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -25,9 +25,9 @@
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="Title"
+        android:text="@string/title"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bottomSheetLine" />
@@ -45,9 +45,9 @@
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="Explanation"
+            android:text="@string/explanation"
             android:textColor="@color/color_gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_size_explanation" />
     </androidx.core.widget.NestedScrollView>
 
 

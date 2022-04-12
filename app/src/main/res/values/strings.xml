@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">My Material Design</string>
+    <string name="search">Найти</string>
+    <string name="today">Сегодняшняя</string>
+    <string name="yesterday">Вчерашняя</string>
+    <string name="before_yesterday">Позaвчерашняя</string>
+    <string name="search_wiki">Поиск в википедии</string>
+    <string name="title">Title</string>
+    <string name="explanation">Explanation</string>
 </resources>

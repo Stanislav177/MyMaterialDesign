@@ -17,12 +17,12 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Найти"
+            android:hint="@string/search"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconDrawable="@drawable/ic_wikipedia"
             app:endIconMode="custom"
-            app:helperText="Поиск в википедии">
+            app:helperText="@string/search_wiki">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textSearchWiki"
@@ -39,27 +39,27 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/today"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Сегодняшняя" />
+                android:text="@string/today" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/yesterday"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="Вчерашняя" />
+                android:text="@string/yesterday" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/beforeYesterday"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="Позaвчерашняя" />
+                android:text="@string/before_yesterday" />
 
 
         </com.google.android.material.chip.ChipGroup>
