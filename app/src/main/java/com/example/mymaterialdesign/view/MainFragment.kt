@@ -16,6 +16,8 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding
         get() = _binding!!
 
+    private var day: Int = 0
+
     private val liveData: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
@@ -34,23 +36,32 @@ class MainFragment : Fragment() {
         liveData.getLiveData().observe(viewLifecycleOwner, {
             renderData(it)
         })
-        liveData.request()
-
+        requestAPI()
         searchWiki()
         setOptionsMenu()
         initBtnFAB()
 
+        initChips()
+    }
+
+    private fun initChips() {
         binding.today.setOnClickListener {
-            Toast.makeText(context, "today", Toast.LENGTH_LONG).show()
+            day = 0
+            requestAPI()
         }
         binding.yesterday.setOnClickListener {
-            Toast.makeText(context, "yesterday", Toast.LENGTH_LONG).show()
+            day = 1
+            requestAPI()
         }
         binding.beforeYesterday.setOnClickListener {
-            Toast.makeText(context, "beforeYesterday", Toast.LENGTH_LONG).show()
+            day = 2
+            requestAPI()
         }
+    }
 
-
+    private fun requestAPI() {
+        liveData.modDateDay(day)
+        liveData.request()
     }
 
     private fun initBtnFAB() {
