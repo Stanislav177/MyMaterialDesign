@@ -1,4 +1,4 @@
-package com.example.mymaterialdesign.view
+package com.example.mymaterialdesign.view.main
 
 import android.os.Bundle
 import android.view.*
@@ -9,6 +9,8 @@ import coil.load
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.databinding.FragmentMainBinding
+import com.example.mymaterialdesign.view.MainActivity
+import com.example.mymaterialdesign.view.settings.SettingFragment
 import com.example.mymaterialdesign.viewModel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -78,10 +80,6 @@ class MainFragment : Fragment() {
     private fun searchWiki() {
         binding.layoutSearchWiki.setEndIconOnClickListener {
             liveData.getStartIntent(binding.textSearchWiki.text.toString(), requireContext())
-//            startActivity(Intent(Intent.ACTION_VIEW).apply {
-//                data =
-//                    Uri.parse("https://ru.wikipedia.org/wiki/${binding.textSearchWiki.text.toString()}")
-//            })
         }
     }
 
@@ -119,6 +117,9 @@ class MainFragment : Fragment() {
         when (item.itemId) {
             R.id.setting -> {
                 Toast.makeText(context, "Setting", Toast.LENGTH_LONG).show()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, SettingFragment.newInstance())
+                    .addToBackStack(" ").commit()
             }
             android.R.id.home -> {
                 Toast.makeText(context, "Home", Toast.LENGTH_LONG).show()
