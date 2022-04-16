@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="myColorOnPrimary" format="color" />
+    <attr name="myColorPrimary" format="color" />
+    <attr name="myColorPrimaryLight" format="color" />
+
+    <attr name="myColorOnSecondary" format="color" />
+    <attr name="myColorSecondary" format="color" />
+    <attr name="myColorSecondaryLight" format="color" />
+
+    <attr name="myColorTextBottomSheet" format="color" />
+
+</resources>

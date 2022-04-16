@@ -1,22 +1,68 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.MyMaterialDesign" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+<resources>
+    <!-- Orange application theme. -->
+    <style name="MyOrange" parent="MyBaseTheme">
+        <item name="myColorPrimaryLight">@color/orange_p_light_600</item>
+        <item name="myColorPrimary">@color/orange_p_600</item>
+        <item name="myColorOnPrimary">@color/orange_p_200</item>
+
+        <item name="myColorOnSecondary">@color/white</item>
+        <item name="myColorSecondary">@color/deep_orange_s_700</item>
+        <item name="myColorSecondaryLight">@color/deep_orange_s_light_700</item>
+
+        <item name="bottomAppBarStyle">@style/myStyleBottomAppBar</item>
+        <item name="bottomSheetStyle">@style/myStyleBottomSheet</item>
+        <item name="myColorTextBottomSheet">@color/black</item>
     </style>
 
+    <!-- Teal application theme. -->
+    <style name="MyTeal" parent="MyBaseTheme">
+        <item name="myColorPrimaryLight">@color/teal_p_light_600</item>
+        <item name="myColorPrimary">@color/teal_p_600</item>
+        <item name="myColorOnPrimary">@color/teal_p_200</item>
 
+        <item name="myColorOnSecondary">@color/cyan_s_800</item>
+        <item name="myColorSecondary">@color/cyan_s_500</item>
+        <item name="myColorSecondaryLight">@color/cyan_s_light_500</item>
 
+        <item name="bottomAppBarStyle">@style/myStyleBottomAppBar</item>
+        <item name="bottomSheetStyle">@style/myStyleBottomSheet</item>
+        <item name="myColorTextBottomSheet">@color/black</item>
+    </style>
 
+    <!-- Grey application theme. -->
+    <style name="MyGrey" parent="MyBaseTheme">
+        <item name="myColorPrimaryLight">@color/grey_p_light_600</item>
+        <item name="myColorPrimary">@color/grey_p_600</item>
+        <item name="myColorOnPrimary">@color/grey_p_200</item>
 
+        <item name="myColorOnSecondary">@color/blue_grey_s_800</item>
+        <item name="myColorSecondary">@color/blue_grey_s_500</item>
+        <item name="myColorSecondaryLight">@color/blue_grey_s_500</item>
+
+        <item name="bottomAppBarStyle">@style/myStyleBottomAppBar</item>
+        <item name="bottomSheetStyle">@style/myStyleBottomSheet</item>
+        <item name="myColorTextBottomSheet">@color/black</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="MyBaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">?myColorPrimary</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">?myColorOnPrimary</item>
+
+        <item name="colorSecondary">?myColorSecondary</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">?myColorOnSecondary</item>
+
+        <item name="android:statusBarColor">?myColorPrimary</item>
+    </style>
+
+    <style name="myStyleBottomAppBar" parent="Widget.MaterialComponents.BottomAppBar">
+        <item name="backgroundTint">?myColorPrimary</item>
+    </style>
+
+    <style name="myStyleBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">?myColorOnPrimary</item>
+    </style>
 
 </resources>

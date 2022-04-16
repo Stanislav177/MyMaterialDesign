@@ -62,7 +62,7 @@ class MainViewModel(
         }
 
         override fun onFailure(call: Call<PDOServerResponse>, t: Throwable) {
-            TODO("Not yet implemented")
+            liveData.postValue(AppStatePictureOfTheDay.Error(t))
         }
     }
 

@@ -1,0 +1,59 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Orange application theme. -->
+    <style name="MyOrange" parent="MyBaseTheme">
+        <item name="myColorPrimaryLight">@color/orange_p_dark_600</item>
+        <item name="myColorPrimary">@color/orange_p_dark_600</item>
+        <item name="myColorOnPrimary">@color/orange_p_dark_600</item>
+
+        <item name="myColorOnSecondary">@color/white</item>
+        <item name="myColorSecondary">@color/deep_orange_s_dark_700</item>
+        <item name="myColorSecondaryLight">@color/deep_orange_s_light_700</item>
+
+        <item name="bottomAppBarStyle">@style/myStyleBottomAppBar</item>
+        <item name="bottomSheetStyle">@style/myStyleBottomSheet</item>
+        <item name="myColorTextBottomSheet">@color/black</item>
+    </style>
+
+    <!-- Teal application theme. -->
+    <style name="MyTeal" parent="MyBaseTheme">
+        <item name="myColorPrimaryLight">@color/teal_p_dark_600</item>
+        <item name="myColorPrimary">@color/teal_p_dark_600</item>
+        <item name="myColorOnPrimary">@color/teal_p_dark_600</item>
+
+        <item name="myColorOnSecondary">@color/white</item>
+        <item name="myColorSecondary">@color/cyan_s_500</item>
+        <item name="myColorSecondaryLight">@color/cyan_s_light_500</item>
+
+        <item name="bottomAppBarStyle">@style/myStyleBottomAppBar</item>
+        <item name="bottomSheetStyle">@style/myStyleBottomSheet</item>
+        <item name="myColorTextBottomSheet">@color/black</item>
+    </style>
+    <!-- Grey(night) application theme. -->
+    <style name="MyGrey" parent="MyBaseTheme">
+        <item name="myColorPrimaryLight">@color/grey_p_dark_600</item>
+        <item name="myColorPrimary">@color/grey_p_dark_600</item>
+        <item name="myColorOnPrimary">@color/grey_p_dark_600</item>
+
+        <item name="myColorSecondary">@color/blue_grey_s_dark_500</item>
+        <item name="myColorOnSecondary">@color/white</item>
+        <item name="myColorSecondaryLight">@color/blue_grey_s_dark_500</item>
+
+        <item name="bottomAppBarStyle">@style/myStyleBottomAppBar</item>
+        <item name="bottomSheetStyle">@style/myStyleBottomSheet</item>
+        <item name="myColorTextBottomSheet">@color/white</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="MyBaseTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">?myColorPrimaryLight</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">?myColorOnPrimary</item>
+
+        <item name="colorSecondary">?myColorSecondary</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">?myColorOnSecondary</item>
+
+        <item name="android:statusBarColor">?myColorPrimary</item>
+    </style>
+
+</resources>
