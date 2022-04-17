@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.mymaterialdesign.databinding.FragmentSettingBinding
 import com.example.mymaterialdesign.utils.KEY_SP
-import com.example.mymaterialdesign.utils.KEY_TAB_THEME
+import com.example.mymaterialdesign.utils.KEY_TAB_THEME_COLOR
+import com.example.mymaterialdesign.utils.KEY_TAB_THEME_LIGHT_DARK
 import com.example.mymaterialdesign.view.MainActivity
 import com.google.android.material.tabs.TabLayout
 
@@ -45,57 +45,35 @@ class SettingFragment : Fragment() {
         initTabTheme()
         initTabsColorTheme()
     }
-
-    private fun getClickTab(): Int {
+    private fun getClickTabTheme(): Int {
         val sharedPreferences = parentActivity.getSharedPreferences(
             KEY_SP,
             AppCompatActivity.MODE_PRIVATE
         )
-        return sharedPreferences.getInt(KEY_TAB_THEME, 0)
+        return sharedPreferences.getInt(KEY_TAB_THEME_LIGHT_DARK, 0)
+    }
+
+    private fun getClickTabColor(): Int {
+        val sharedPreferences = parentActivity.getSharedPreferences(
+            KEY_SP,
+            AppCompatActivity.MODE_PRIVATE
+        )
+        return sharedPreferences.getInt(KEY_TAB_THEME_COLOR, 0)
     }
 
     private fun initTabTheme() {
+        binding.tabsTheme.selectTab(binding.tabsColorTheme.getTabAt(getClickTabTheme()))
         binding.tabsTheme.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab!!.position) {
                     0 -> {
-                        Toast.makeText(context, "tab0", Toast.LENGTH_LONG).show()
+                        parentActivity.setThemeLightDarkSP(tab.position)
                     }
                     1 -> {
-                        Toast.makeText(context, "tab1", Toast.LENGTH_LONG).show()
+                        parentActivity.setThemeLightDarkSP(tab.position)
                     }
                     2 -> {
-                        Toast.makeText(context, "tab2", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
-        })
-    }
-
-    private fun initTabsColorTheme() {
-        binding.tabsColorTheme.selectTab(binding.tabsColorTheme.getTabAt(getClickTab()))
-        binding.tabsColorTheme.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab!!.position) {
-                    0 -> {
-                        parentActivity.setThemeSP(tab.position)
-
-                    }
-                    1 -> {
-                        parentActivity.setThemeSP(tab.position)
-
-                    }
-                    2 -> {
-                        parentActivity.setThemeSP(tab.position)
+                        parentActivity.setThemeLightDarkSP(tab.position)
                     }
                 }
                 parentActivity.recreate()
@@ -108,13 +86,55 @@ class SettingFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 when (tab!!.position) {
                     0 -> {
-                        parentActivity.setThemeSP(tab.position)
+                        parentActivity.setThemeLightDarkSP(tab.position)
                     }
                     1 -> {
-                        parentActivity.setThemeSP(tab.position)
+                        parentActivity.setThemeLightDarkSP(tab.position)
                     }
                     2 -> {
-                        parentActivity.setThemeSP(tab.position)
+                        parentActivity.setThemeLightDarkSP(tab.position)
+                    }
+                }
+                parentActivity.recreate()
+            }
+
+        })
+    }
+
+    private fun initTabsColorTheme() {
+        binding.tabsColorTheme.selectTab(binding.tabsColorTheme.getTabAt(getClickTabColor()))
+        binding.tabsColorTheme.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab!!.position) {
+                    0 -> {
+                        parentActivity.setThemeColorSP(tab.position)
+
+                    }
+                    1 -> {
+                        parentActivity.setThemeColorSP(tab.position)
+
+                    }
+                    2 -> {
+                        parentActivity.setThemeColorSP(tab.position)
+                    }
+                }
+                parentActivity.recreate()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                when (tab!!.position) {
+                    0 -> {
+                        parentActivity.setThemeColorSP(tab.position)
+                    }
+                    1 -> {
+                        parentActivity.setThemeColorSP(tab.position)
+                    }
+                    2 -> {
+                        parentActivity.setThemeColorSP(tab.position)
                     }
                 }
                 parentActivity.recreate()

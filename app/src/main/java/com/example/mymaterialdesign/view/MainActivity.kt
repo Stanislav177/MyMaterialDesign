@@ -2,16 +2,17 @@ package com.example.mymaterialdesign.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate.*
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.utils.*
 import com.example.mymaterialdesign.view.main.MainFragment
-
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(startTheme(getThemeSP()))
+        setLightDarkTheme(getLightDarkThemeSP())
+        setTheme(startTheme(getColorThemeSP()))
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
@@ -20,17 +21,44 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setThemeSP(numberTheme: Int) {
+    fun setThemeColorSP(numberTheme: Int) {
         val sharedPreferences = getSharedPreferences(KEY_SP, MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putInt(KEY_THEME, numberTheme)
-        editor.putInt(KEY_TAB_THEME,numberTheme)
+        editor.putInt(KEY_THEME_COLOR, numberTheme)
+        editor.putInt(KEY_TAB_THEME_COLOR, numberTheme)
         editor.apply()
     }
 
-    private fun getThemeSP(): Int {
+    fun setThemeLightDarkSP(numberTheme: Int) {
         val sharedPreferences = getSharedPreferences(KEY_SP, MODE_PRIVATE)
-        return sharedPreferences.getInt(KEY_THEME, -1)
+        val editor = sharedPreferences.edit()
+        editor.putInt(KEY_THEME_LIGHT_DARK, numberTheme)
+        editor.putInt(KEY_TAB_THEME_LIGHT_DARK, numberTheme)
+        editor.apply()
+    }
+
+    private fun getColorThemeSP(): Int {
+        val sharedPreferences = getSharedPreferences(KEY_SP, MODE_PRIVATE)
+        return sharedPreferences.getInt(KEY_THEME_COLOR, -1)
+    }
+
+    private fun getLightDarkThemeSP(): Int {
+        val sharedPreferences = getSharedPreferences(KEY_SP, MODE_PRIVATE)
+        return sharedPreferences.getInt(KEY_TAB_THEME_LIGHT_DARK, 1)
+    }
+
+    private fun setLightDarkTheme(numTheme: Int) {
+        when (numTheme) {
+            0 -> {
+                setDefaultNightMode(MODE_NIGHT_NO)
+            }
+            1 -> {
+                setDefaultNightMode(MODE_NIGHT_YES)
+            }
+            2 -> {
+                setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+        }
     }
 
     private fun startTheme(numberTheme: Int): Int {
