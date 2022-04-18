@@ -8,7 +8,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp">
+        android:paddingTop="@dimen/padding_top_scroll_setting_frag">
 
 
         <LinearLayout
@@ -19,9 +19,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:text="Выбор темы"
-                android:textSize="15sp" />
+                android:paddingStart="@dimen/padding_start_tv_paragh_menu_setting"
+                android:text="@string/selection_theme"
+                android:textSize="@dimen/text_size_paragh_menu_setting" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabsTheme"
@@ -31,34 +31,34 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Светлая" />
+                    android:text="@string/text_tab_theme_light" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Темная" />
+                    android:text="@string/text_tab_theme_dark" />
 
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Системная" />
+                    android:text="@string/text_tab_theme_system" />
 
 
             </com.google.android.material.tabs.TabLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/layout_height_view_line"
+                android:layout_marginTop="@dimen/margin_top_view_line"
                 android:background="@color/black" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:text="Выбор цвета"
-                android:textSize="15sp" />
+                android:paddingStart="@dimen/padding_start_tv_paragh_menu_setting"
+                android:text="@string/selection_color_theme"
+                android:textSize="@dimen/text_size_paragh_menu_setting" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabsColorTheme"
@@ -68,34 +68,34 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Серая" />
+                    android:text="@string/text_tab_theme_grey" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Зеленая" />
+                    android:text="@string/text_tab_theme_green" />
 
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Оранжевая" />
+                    android:text="@string/text_tab_theme_orange" />
 
 
             </com.google.android.material.tabs.TabLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/layout_height_view_line"
+                android:layout_marginTop="@dimen/margin_top_view_line"
                 android:background="@color/black" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:text="Выбор стиля"
-                android:textSize="15sp" />
+                android:paddingStart="@dimen/padding_start_tv_paragh_menu_setting"
+                android:text="@string/selection_style"
+                android:textSize="@dimen/text_size_paragh_menu_setting" />
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
@@ -106,13 +106,13 @@
                     android:id="@+id/squareCorners"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Квадратные углы" />
+                    android:text="@string/text_chip_style_square_corners" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/roundedCorners"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Закругленные углы" />
+                    android:text="@string/text_chip_style_rounded_corners" />
 
             </com.google.android.material.chip.ChipGroup>
 

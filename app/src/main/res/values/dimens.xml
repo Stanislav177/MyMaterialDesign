@@ -2,4 +2,9 @@
 <resources>
     <dimen name="text_size_explanation">15sp</dimen>
     <dimen name="text_size_title">20sp</dimen>
+    <dimen name="padding_top_scroll_setting_frag">5dp</dimen>
+    <dimen name="text_size_paragh_menu_setting">15sp</dimen>
+    <dimen name="layout_height_view_line">1dp</dimen>
+    <dimen name="margin_top_view_line">5dp</dimen>
+    <dimen name="padding_start_tv_paragh_menu_setting">10dp</dimen>
 </resources>

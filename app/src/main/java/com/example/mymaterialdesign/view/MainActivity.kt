@@ -49,13 +49,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun setLightDarkTheme(numTheme: Int) {
         when (numTheme) {
-            0 -> {
+            THEME_LIGHT -> {
                 setDefaultNightMode(MODE_NIGHT_NO)
             }
-            1 -> {
+            THEME_NIGHT -> {
                 setDefaultNightMode(MODE_NIGHT_YES)
             }
-            2 -> {
+            THEME_SYSTEM_DEFAULT -> {
                 setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
             }
         }

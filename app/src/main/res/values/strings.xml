@@ -7,4 +7,15 @@
     <string name="search_wiki">Поиск в википедии</string>
     <string name="title">Title</string>
     <string name="explanation">Explanation</string>
+    <string name="selection_theme">Выбор темы</string>
+    <string name="selection_color_theme">Выбор цвета</string>
+    <string name="selection_style">Выбор стиля</string>
+    <string name="text_tab_theme_grey">Серая</string>
+    <string name="text_tab_theme_green">Зеленая</string>
+    <string name="text_tab_theme_orange">Оранжевая</string>
+    <string name="text_tab_theme_light">Светлая</string>
+    <string name="text_tab_theme_dark">Темная</string>
+    <string name="text_tab_theme_system">Системная</string>
+    <string name="text_chip_style_square_corners">Квадратные углы</string>
+    <string name="text_chip_style_rounded_corners">Закругленные углы</string>
 </resources>
