@@ -1,4 +1,4 @@
-package com.example.mymaterialdesign.view.main
+package com.example.mymaterialdesign.view.pictureOfTheDay
 
 import android.os.Bundle
 import android.view.*
@@ -8,14 +8,19 @@ import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
-import com.example.mymaterialdesign.databinding.FragmentMainBinding
+import com.example.mymaterialdesign.databinding.FragmentPictureOfTheDayBinding
+import com.example.mymaterialdesign.utils.CLICK_TAB_TODAY
+import com.example.mymaterialdesign.utils.CLICK_TAB_YESTERDAY
 import com.example.mymaterialdesign.view.settings.SettingFragment
 import com.example.mymaterialdesign.viewModel.PictureViewModel
+import com.google.android.material.tabs.TabLayout
 
-class MainFragment : Fragment() {
-    private var _binding: FragmentMainBinding? = null
-    private val binding: FragmentMainBinding
-        get() = _binding!!
+class PictureOfTheDayFragment : Fragment() {
+    private var _binding: FragmentPictureOfTheDayBinding? = null
+    private val binding: FragmentPictureOfTheDayBinding
+        get() {
+            return _binding!!
+        }
 
     private var day: Int = 0
 
@@ -28,7 +33,7 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentPictureOfTheDayBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,48 +43,12 @@ class MainFragment : Fragment() {
             renderData(it)
         })
         requestAPI()
-        searchWiki()
-//        setOptionsMenu()
-//        initBtnFAB()
-
-        initChips()
-    }
-
-    private fun initChips() {
-        binding.today.setOnClickListener {
-            day = 0
-            requestAPI()
-        }
-        binding.yesterday.setOnClickListener {
-            day = 1
-            requestAPI()
-        }
-        binding.beforeYesterday.setOnClickListener {
-            day = 2
-            requestAPI()
-        }
+        initTabs()
     }
 
     private fun requestAPI() {
         liveData.modDateDay(day)
         liveData.request()
-    }
-
-//    private fun initBtnFAB() {
-//        binding.fab.setOnClickListener {
-//            Toast.makeText(context, "FAB", Toast.LENGTH_LONG).show()
-//        }
-//    }
-
-//    private fun setOptionsMenu() {
-//        (requireActivity() as MainActivity).setSupportActionBar(binding.appBarBottom)
-//        setHasOptionsMenu(true)
-//    }
-
-    private fun searchWiki() {
-        binding.layoutSearchWiki.setEndIconOnClickListener {
-            liveData.getStartIntent(binding.textSearchWiki.text.toString(), requireContext())
-        }
     }
 
     private fun renderData(appStatePictureOfTheDay: AppStatePictureOfTheDay) {
@@ -97,14 +66,49 @@ class MainFragment : Fragment() {
     }
 
     private fun setInfoDisplay(appStatePictureOfTheDay: AppStatePictureOfTheDay.Success) {
-        binding.imageToDay.load(appStatePictureOfTheDay.pdoServerResponse.url) {
-            placeholder(R.drawable.ic_no_photo_vector)
+
+        with(binding) {
+            imageToDay.load(appStatePictureOfTheDay.pdoServerResponse.url) {
+                placeholder(R.drawable.ic_no_photo_vector)
+            }
+
+            titlePictureOfTheDay.text = appStatePictureOfTheDay.pdoServerResponse.title
+
+            includeMainFragment.title.text =
+                appStatePictureOfTheDay.pdoServerResponse.title
+            includeMainFragment.explanation.text =
+                appStatePictureOfTheDay.pdoServerResponse.explanation
         }
 
-        binding.includeMainFragment.title.text =
-            appStatePictureOfTheDay.pdoServerResponse.title
-        binding.includeMainFragment.explanation.text =
-            appStatePictureOfTheDay.pdoServerResponse.explanation
+    }
+
+    private fun initTabs() {
+        binding.tabsPicture.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab!!.position) {
+                    CLICK_TAB_TODAY -> {
+                        day = tab.position
+                        requestAPI()
+                    }
+                    CLICK_TAB_YESTERDAY -> {
+                        day = tab.position
+                        requestAPI()
+                    }
+                    2 -> {
+                    }
+                }
+            }
+
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -133,6 +137,6 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = PictureOfTheDayFragment()
     }
 }

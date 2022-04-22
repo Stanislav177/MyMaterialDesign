@@ -18,4 +18,5 @@
     <string name="text_tab_theme_system">Системная</string>
     <string name="text_chip_style_square_corners">Квадратные углы</string>
     <string name="text_chip_style_rounded_corners">Закругленные углы</string>
+    <string name="name_tab_date">Дата</string>
 </resources>

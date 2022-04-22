@@ -17,7 +17,7 @@ import java.time.LocalDate
 import java.time.Period
 import java.util.*
 
-class MainViewModel(
+class PictureViewModel(
     private val liveData: MutableLiveData<AppStatePictureOfTheDay> = MutableLiveData(),
     private val pictureOfTheDayRequestImpl: PictureOfTheDayRequestImpl = PictureOfTheDayRequestImpl()
 ) : ViewModel() {

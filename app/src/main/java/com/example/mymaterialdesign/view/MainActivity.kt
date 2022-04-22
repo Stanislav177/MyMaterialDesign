@@ -3,21 +3,65 @@ package com.example.mymaterialdesign.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.fragment.app.Fragment
 import com.example.mymaterialdesign.R
+import com.example.mymaterialdesign.databinding.ActivityMainBinding
 import com.example.mymaterialdesign.utils.*
-import com.example.mymaterialdesign.view.main.MainFragment
+import com.example.mymaterialdesign.view.pictureOfTheDay.PictureOfTheDayFragment
+import com.example.mymaterialdesign.view.viewpager.EarthFragment
+import com.example.mymaterialdesign.view.viewpager.MarsFragment
+import com.example.mymaterialdesign.view.viewpager.SystemFragment
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLightDarkTheme(getLightDarkThemeSP())
         setTheme(startTheme(getColorThemeSP()))
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, MainFragment.newInstance()).commit()
+                .replace(R.id.fragmentContainer, PictureOfTheDayFragment.newInstance())
+                .addToBackStack(" ").commit()
+        }
+        initNavigationBottom()
+    }
+
+    private fun toFragment(f: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, f).addToBackStack(" ").commit()
+    }
+
+    private fun initNavigationBottom() {
+        with(binding) {
+            bottomNavView.setOnItemSelectedListener {
+                when (it.itemId) {
+                    R.id.imageDayMenuBottom -> {
+                        toFragment(PictureOfTheDayFragment.newInstance())
+                        true
+                    }
+                    R.id.weatherMenuBottom -> {
+                        toFragment(SystemFragment())
+                        false
+                    }
+                    R.id.earthMenuBottom -> {
+                        toFragment(EarthFragment())
+                        true
+                    }
+                    R.id.marsMenuBottom -> {
+                        toFragment(MarsFragment())
+                        true
+                    }
+                    R.id.searchMenuBottom -> {
+                        true
+                    }
+                    else -> true
+                }
+            }
+            bottomNavView.selectedItemId = R.id.imageDayMenuBottom
         }
     }
 

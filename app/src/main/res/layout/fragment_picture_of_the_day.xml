@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabsPicture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yesterday" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name_tab_date" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/titlePictureOfTheDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_title"
+            android:gravity="center"
+            android:layout_marginTop="10dp"/>
+
+        <com.example.mymaterialdesign.utils.EquilateralImageView
+            android:id="@+id/imageToDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:background="@drawable/ic_no_photo_vector" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/includeMainFragment"
+        layout="@layout/bottom_sheet_layout" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

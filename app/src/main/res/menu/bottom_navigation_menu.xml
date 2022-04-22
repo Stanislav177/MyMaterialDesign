@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/imageDayMenuBottom"
+        android:icon="@drawable/ic_camera"
+        android:title="Фото дня"
+        android:orderInCategory="30"/>
+
+    <item
+        android:id="@+id/earthMenuBottom"
+        android:icon="@drawable/ic_earth"
+        android:title="Земля"
+        android:orderInCategory="10"/>
+    <item
+        android:id="@+id/marsMenuBottom"
+        android:icon="@drawable/ic_mars"
+        android:title="Марс"
+        android:orderInCategory="20"/>
+
+    <item
+        android:id="@+id/weatherMenuBottom"
+        android:icon="@drawable/ic_telescope"
+        android:title="Погода"
+        android:orderInCategory="40"/>
+
+    <item
+        android:id="@+id/searchMenuBottom"
+        android:icon="@drawable/ic_search"
+        android:title="Поиск"
+        android:orderInCategory="50"/>
+
+</menu>
