@@ -5,15 +5,15 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import coil.load
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.example.mymaterialdesign.R
-import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.databinding.FragmentPictureOfTheDayBinding
-import com.example.mymaterialdesign.utils.CLICK_TAB_TODAY
-import com.example.mymaterialdesign.utils.CLICK_TAB_YESTERDAY
 import com.example.mymaterialdesign.view.settings.SettingFragment
+import com.example.mymaterialdesign.view.viewpager.TO_DAY
+import com.example.mymaterialdesign.view.viewpager.ViewPagerPictureAdapter
+import com.example.mymaterialdesign.view.viewpager.YESTERDAY
 import com.example.mymaterialdesign.viewModel.PictureViewModel
-import com.google.android.material.tabs.TabLayout
 
 class PictureOfTheDayFragment : Fragment() {
     private var _binding: FragmentPictureOfTheDayBinding? = null
@@ -39,76 +39,49 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        liveData.getLiveData().observe(viewLifecycleOwner, {
-            renderData(it)
-        })
         requestAPI()
-        initTabs()
+        initPagerViewPicture()
+        binding.tabsPicture.setupWithViewPager(binding.viewPagerPicture)
+        binding.tabsPicture.getTabAt(TO_DAY)?.setIcon(R.drawable.ic_image)
+        binding.tabsPicture.getTabAt(YESTERDAY)?.setIcon(R.drawable.ic_image_yesterday)
+    }
+
+    private fun initPagerViewPicture() {
+        binding.viewPagerPicture.adapter =
+            ViewPagerPictureAdapter(requireActivity().supportFragmentManager)
+
+        binding.viewPagerPicture.addOnAdapterChangeListener(
+            object : ViewPager.OnPageChangeListener, ViewPager.OnAdapterChangeListener {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+
+                }
+
+                override fun onAdapterChanged(
+                    viewPager: ViewPager,
+                    oldAdapter: PagerAdapter?,
+                    newAdapter: PagerAdapter?
+                ) {
+                }
+
+            }
+        )
     }
 
     private fun requestAPI() {
         liveData.modDateDay(day)
         liveData.request()
-    }
-
-    private fun renderData(appStatePictureOfTheDay: AppStatePictureOfTheDay) {
-        when (appStatePictureOfTheDay) {
-            is AppStatePictureOfTheDay.Error -> {
-            }
-            is AppStatePictureOfTheDay.ErrorCode -> {
-            }
-            is AppStatePictureOfTheDay.Loading -> {
-            }
-            is AppStatePictureOfTheDay.Success -> {
-                setInfoDisplay(appStatePictureOfTheDay)
-            }
-        }
-    }
-
-    private fun setInfoDisplay(appStatePictureOfTheDay: AppStatePictureOfTheDay.Success) {
-
-        with(binding) {
-            imageToDay.load(appStatePictureOfTheDay.pdoServerResponse.url) {
-                placeholder(R.drawable.ic_no_photo_vector)
-            }
-
-            titlePictureOfTheDay.text = appStatePictureOfTheDay.pdoServerResponse.title
-
-            includeMainFragment.title.text =
-                appStatePictureOfTheDay.pdoServerResponse.title
-            includeMainFragment.explanation.text =
-                appStatePictureOfTheDay.pdoServerResponse.explanation
-        }
-
-    }
-
-    private fun initTabs() {
-        binding.tabsPicture.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab!!.position) {
-                    CLICK_TAB_TODAY -> {
-                        day = tab.position
-                        requestAPI()
-                    }
-                    CLICK_TAB_YESTERDAY -> {
-                        day = tab.position
-                        requestAPI()
-                    }
-                    2 -> {
-                    }
-                }
-            }
-
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

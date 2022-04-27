@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.model.PDOServerResponse
-import com.example.mymaterialdesign.repository.PictureOfTheDayRequestImpl
+import com.example.mymaterialdesign.repository.NasaAPIRequestImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,7 +19,7 @@ import java.util.*
 
 class PictureViewModel(
     private val liveData: MutableLiveData<AppStatePictureOfTheDay> = MutableLiveData(),
-    private val pictureOfTheDayRequestImpl: PictureOfTheDayRequestImpl = PictureOfTheDayRequestImpl()
+    private val pictureOfTheDayRequestImpl: NasaAPIRequestImpl = NasaAPIRequestImpl()
 ) : ViewModel() {
 
     private lateinit var dayDate: String

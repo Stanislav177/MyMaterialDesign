@@ -4,10 +4,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class ViewPagerAdapter(private val fragmentManager: FragmentManager) :
+const val TO_DAY = 0
+const val YESTERDAY = 1
+
+
+class ViewPagerPictureAdapter(private val fragmentManager: FragmentManager) :
     FragmentStatePagerAdapter(fragmentManager) {
 
-    private val listFragments = arrayListOf(MarsFragment(), EarthFragment(), SystemFragment())
+    private val listFragments = arrayListOf(PictureToDay(), PictureYesterday())
 
     override fun getCount() = listFragments.size
 
@@ -15,8 +19,15 @@ class ViewPagerAdapter(private val fragmentManager: FragmentManager) :
         return when (position) {
             0 -> listFragments[0]
             1 -> listFragments[1]
-            2 -> listFragments[2]
             else -> listFragments[0]
+        }
+    }
+
+    override fun getPageTitle(position: Int): CharSequence {
+        return when (position) {
+            TO_DAY -> "Сегодняшняя"
+            YESTERDAY -> "Вчерашняя"
+            else -> "NULL"
         }
     }
 }

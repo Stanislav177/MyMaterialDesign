@@ -1,7 +1,8 @@
 package com.example.mymaterialdesign.utils
 
 const val BASE_URL = "https://api.nasa.gov/"
-const val URL_API_END_POINT = "planetary/apod"
+const val URL_API_END_POINT_TO_DAY_PICTURE = "planetary/apod"
+const val URL_API_END_POINT_PHOTO = "mars-photos/api/v1/rovers/curiosity/photos"
 
 const val THEME_GREY = 0
 const val THEME_TEAL = 1
