@@ -11,6 +11,7 @@ import com.example.mymaterialdesign.utils.*
 import com.example.mymaterialdesign.view.bottomSheetDialog.MyBottomSheetDialogSearchWiki
 import com.example.mymaterialdesign.view.photoMars.PhotoMarsFragment
 import com.example.mymaterialdesign.view.pictureOfTheDay.PictureOfTheDayFragment
+import com.example.mymaterialdesign.view.settings.SettingFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, PictureOfTheDayFragment.newInstance())
                 .addToBackStack(" ").commit()
+            binding.bottomNavView.selectedItemId = R.id.imageDayMenuBottom
         }
         initNavigationBottom()
     }
@@ -47,11 +49,11 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.weatherMenuBottom -> {
-                        Toast.makeText(applicationContext,"Погода",Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, "Погода", Toast.LENGTH_LONG).show()
                         true
                     }
-                    R.id.earthMenuBottom -> {
-                        Toast.makeText(applicationContext,"Данные земли",Toast.LENGTH_LONG).show()
+                    R.id.settingMenuBottom -> {
+                        toFragment(SettingFragment.newInstance())
                         true
                     }
                     R.id.marsMenuBottom -> {
@@ -59,13 +61,13 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.searchMenuBottom -> {
-                       dialogFragment.show(supportFragmentManager," ")
+                        dialogFragment.show(supportFragmentManager, " ")
                         true
                     }
                     else -> true
                 }
             }
-            bottomNavView.selectedItemId = R.id.imageDayMenuBottom
+
         }
     }
 
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getColorThemeSP(): Int {
         val sharedPreferences = getSharedPreferences(KEY_SP, MODE_PRIVATE)
-        return sharedPreferences.getInt(KEY_THEME_COLOR, 1)
+        return sharedPreferences.getInt(KEY_THEME_COLOR, 0)
     }
 
     private fun getLightDarkThemeSP(): Int {
@@ -114,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             THEME_GREY -> R.style.MyGrey
             THEME_TEAL -> R.style.MyTeal
             THEME_ORANGE -> R.style.MyOrange
-            else -> THEME_ORANGE
+            else -> THEME_GREY
         }
     }
 }

@@ -14,9 +14,10 @@ import com.example.mymaterialdesign.viewModel.PictureViewModel
 
 class PictureToDay : Fragment() {
     private var _binding: FragmentToDayBinding? = null
-    private val binding: FragmentToDayBinding get() {
-        return _binding!!
-    }
+    private val binding: FragmentToDayBinding
+        get() {
+            return _binding!!
+        }
     private var day: Int = 0
 
     private val liveData: PictureViewModel by lazy {
@@ -54,6 +55,7 @@ class PictureToDay : Fragment() {
             }
         }
     }
+
     private fun requestAPI() {
         liveData.modDateDay(day)
         liveData.request()
@@ -75,6 +77,7 @@ class PictureToDay : Fragment() {
         }
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Orange application theme. -->
     <style name="MyOrange" parent="MyBaseTheme">
         <item name="myColorPrimaryLight">@color/orange_p_dark_600</item>

@@ -20,5 +20,5 @@ interface RequestAPI {
     fun getPhotoMars(
         @Query("api_key") apiKey: String,
         @Query("earth_date") earthDate: String
-    ) : Call<DTOMarsRoverPhotos>
+    ): Call<DTOMarsRoverPhotos>
 }

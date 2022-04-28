@@ -38,12 +38,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_tab_theme_dark" />
 
-
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_tab_theme_system" />
-
 
             </com.google.android.material.tabs.TabLayout>
 
@@ -120,16 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize" />
 
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/appBarBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:fabAlignmentMode="end"
-        app:navigationIcon="@drawable/ic_hamburger_menu_bottom_bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

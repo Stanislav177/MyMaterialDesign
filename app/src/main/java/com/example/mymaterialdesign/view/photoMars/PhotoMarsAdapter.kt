@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.mymaterialdesign.R
@@ -37,7 +36,6 @@ class PhotoMarsAdapter : RecyclerView.Adapter<PhotoMarsAdapter.MyPhotoMarsViewHo
 
         fun bind(photoMars: PhotoMars) {
             itemView.findViewById<ImageView>(R.id.photoMarsItemCardView).load(photoMars.url)
-                // TODO не проходим по высоте.
         }
 
     }

@@ -3,30 +3,30 @@
     <item
         android:id="@+id/imageDayMenuBottom"
         android:icon="@drawable/ic_camera"
-        android:title="Фото дня"
-        android:orderInCategory="30"/>
+        android:title="@string/photo_to_day"
+        android:orderInCategory="30" />
 
     <item
-        android:id="@+id/earthMenuBottom"
+        android:id="@+id/settingMenuBottom"
         android:icon="@drawable/ic_settings_menu"
-        android:title="Земля"
-        android:orderInCategory="50"/>
+        android:title="@string/setting"
+        android:orderInCategory="50" />
     <item
         android:id="@+id/marsMenuBottom"
         android:icon="@drawable/ic_mars"
-        android:title="Марс"
-        android:orderInCategory="20"/>
+        android:title="@string/mars"
+        android:orderInCategory="20" />
 
     <item
         android:id="@+id/weatherMenuBottom"
         android:icon="@drawable/ic_telescope"
-        android:title="Погода"
-        android:orderInCategory="40"/>
+        android:title="@string/weather"
+        android:orderInCategory="40" />
 
     <item
         android:id="@+id/searchMenuBottom"
         android:icon="@drawable/ic_search"
-        android:title="Поиск"
-        android:orderInCategory="10"/>
+        android:title="@string/search"
+        android:orderInCategory="10" />
 
 </menu>

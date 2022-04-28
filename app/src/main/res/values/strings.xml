@@ -19,4 +19,8 @@
     <string name="text_chip_style_square_corners">Квадратные углы</string>
     <string name="text_chip_style_rounded_corners">Закругленные углы</string>
     <string name="name_tab_date">Дата</string>
+    <string name="photo_to_day">Фото дня</string>
+    <string name="setting">Настройки</string>
+    <string name="mars">Марс</string>
+    <string name="weather">Погода</string>
 </resources>

@@ -16,7 +16,6 @@ import com.google.android.material.tabs.TabLayout
 
 class SettingFragment : Fragment() {
 
-
     private var _binding: FragmentSettingBinding? = null
     private val binding: FragmentSettingBinding
         get() = _binding!!
@@ -38,19 +37,18 @@ class SettingFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setOptionsMenu()
-
         super.onViewCreated(view, savedInstanceState)
 
         initTabTheme()
         initTabsColorTheme()
     }
+
     private fun getClickTabTheme(): Int {
         val sharedPreferences = parentActivity.getSharedPreferences(
             KEY_SP,
             AppCompatActivity.MODE_PRIVATE
         )
-        return sharedPreferences.getInt(KEY_TAB_THEME_LIGHT_DARK, 0)
+        return sharedPreferences.getInt(KEY_TAB_THEME_LIGHT_DARK, 2)
     }
 
     private fun getClickTabColor(): Int {
@@ -140,11 +138,6 @@ class SettingFragment : Fragment() {
                 parentActivity.recreate()
             }
         })
-    }
-
-    private fun setOptionsMenu() {
-        (requireActivity() as MainActivity).setSupportActionBar(binding.appBarBottom)
-        setHasOptionsMenu(true)
     }
 
     override fun onDestroy() {

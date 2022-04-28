@@ -1,15 +1,15 @@
 package com.example.mymaterialdesign.view.pictureOfTheDay
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.FragmentPictureOfTheDayBinding
-import com.example.mymaterialdesign.view.settings.SettingFragment
 import com.example.mymaterialdesign.view.viewpager.TO_DAY
 import com.example.mymaterialdesign.view.viewpager.ViewPagerPictureAdapter
 import com.example.mymaterialdesign.view.viewpager.YESTERDAY
@@ -74,7 +74,6 @@ class PictureOfTheDayFragment : Fragment() {
                     newAdapter: PagerAdapter?
                 ) {
                 }
-
             }
         )
     }
@@ -82,26 +81,6 @@ class PictureOfTheDayFragment : Fragment() {
     private fun requestAPI() {
         liveData.modDateDay(day)
         liveData.request()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.app_bar_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.setting -> {
-                Toast.makeText(context, "Setting", Toast.LENGTH_LONG).show()
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, SettingFragment.newInstance())
-                    .addToBackStack(" ").commit()
-            }
-            android.R.id.home -> {
-                Toast.makeText(context, "Home", Toast.LENGTH_LONG).show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

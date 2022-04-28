@@ -17,8 +17,8 @@ class PictureYesterday : Fragment() {
     private var _binding: FragmentYesterdayBinding? = null
     private val binding: FragmentYesterdayBinding
         get() {
-        return _binding!!
-    }
+            return _binding!!
+        }
     private var day: Int = 1
 
     private val liveData: PictureViewModel by lazy {
@@ -56,6 +56,7 @@ class PictureYesterday : Fragment() {
             }
         }
     }
+
     private fun requestAPI() {
         liveData.modDateDay(day)
         liveData.request()
@@ -77,6 +78,7 @@ class PictureYesterday : Fragment() {
         }
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
