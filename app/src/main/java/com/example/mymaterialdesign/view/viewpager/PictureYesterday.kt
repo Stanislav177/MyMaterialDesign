@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
-import com.example.mymaterialdesign.databinding.FragmentSystemBinding
-import com.example.mymaterialdesign.databinding.FragmentToDayBinding
 import com.example.mymaterialdesign.databinding.FragmentYesterdayBinding
 import com.example.mymaterialdesign.viewModel.PictureViewModel
 

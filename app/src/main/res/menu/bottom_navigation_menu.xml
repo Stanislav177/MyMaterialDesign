@@ -8,9 +8,9 @@
 
     <item
         android:id="@+id/earthMenuBottom"
-        android:icon="@drawable/ic_earth"
+        android:icon="@drawable/ic_settings_menu"
         android:title="Земля"
-        android:orderInCategory="10"/>
+        android:orderInCategory="50"/>
     <item
         android:id="@+id/marsMenuBottom"
         android:icon="@drawable/ic_mars"
@@ -27,6 +27,6 @@
         android:id="@+id/searchMenuBottom"
         android:icon="@drawable/ic_search"
         android:title="Поиск"
-        android:orderInCategory="50"/>
+        android:orderInCategory="10"/>
 
 </menu>

@@ -1,21 +1,22 @@
 package com.example.mymaterialdesign.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.ActivityMainBinding
 import com.example.mymaterialdesign.utils.*
+import com.example.mymaterialdesign.view.bottomSheetDialog.MyBottomSheetDialogSearchWiki
 import com.example.mymaterialdesign.view.photoMars.PhotoMarsFragment
 import com.example.mymaterialdesign.view.pictureOfTheDay.PictureOfTheDayFragment
-import com.example.mymaterialdesign.view.viewpager.EarthFragment
-import com.example.mymaterialdesign.view.viewpager.MarsFragment
-import com.example.mymaterialdesign.view.viewpager.SystemFragment
-import com.example.mymaterialdesign.view.viewpager.ViewPagerFragment
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+
+    private var dialogFragment = MyBottomSheetDialogSearchWiki()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +47,11 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.weatherMenuBottom -> {
-                        toFragment(ViewPagerFragment())
+                        Toast.makeText(applicationContext,"Погода",Toast.LENGTH_LONG).show()
                         true
                     }
                     R.id.earthMenuBottom -> {
-                        toFragment(EarthFragment())
+                        Toast.makeText(applicationContext,"Данные земли",Toast.LENGTH_LONG).show()
                         true
                     }
                     R.id.marsMenuBottom -> {
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.searchMenuBottom -> {
+                       dialogFragment.show(supportFragmentManager," ")
                         true
                     }
                     else -> true
@@ -85,12 +87,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun getColorThemeSP(): Int {
         val sharedPreferences = getSharedPreferences(KEY_SP, MODE_PRIVATE)
-        return sharedPreferences.getInt(KEY_THEME_COLOR, -1)
+        return sharedPreferences.getInt(KEY_THEME_COLOR, 1)
     }
 
     private fun getLightDarkThemeSP(): Int {
         val sharedPreferences = getSharedPreferences(KEY_SP, MODE_PRIVATE)
-        return sharedPreferences.getInt(KEY_TAB_THEME_LIGHT_DARK, 1)
+        return sharedPreferences.getInt(KEY_TAB_THEME_LIGHT_DARK, 2)
     }
 
     private fun setLightDarkTheme(numTheme: Int) {
@@ -112,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             THEME_GREY -> R.style.MyGrey
             THEME_TEAL -> R.style.MyTeal
             THEME_ORANGE -> R.style.MyOrange
-            else -> 0
+            else -> THEME_ORANGE
         }
     }
 }
