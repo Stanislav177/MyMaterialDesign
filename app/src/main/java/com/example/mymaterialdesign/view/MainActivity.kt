@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, PictureOfTheDayFragment.newInstance())
-                .addToBackStack(" ").commit()
-            binding.bottomNavView.selectedItemId = R.id.imageDayMenuBottom
-        }
+//        if (savedInstanceState == null) {
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragmentContainer, PictureOfTheDayFragment.newInstance())
+//                .addToBackStack(" ").commit()
+//            binding.bottomNavView.selectedItemId = R.id.imageDayMenuBottom
+//        }
         initNavigationBottom()
     }
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             bottomNavView.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.imageDayMenuBottom -> {
-                        toFragment(PictureOfTheDayFragment.newInstance())
+                        toFragment(PictureDay())
                         true
                     }
                     R.id.weatherMenuBottom -> {
