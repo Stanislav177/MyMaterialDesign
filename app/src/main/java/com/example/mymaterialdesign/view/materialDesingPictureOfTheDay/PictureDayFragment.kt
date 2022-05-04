@@ -1,37 +1,35 @@
-package com.example.mymaterialdesign.view.viewpager
+package com.example.mymaterialdesign.view.materialDesingPictureOfTheDay
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
-import com.example.mymaterialdesign.databinding.FragmentYesterdayBinding
+import com.example.mymaterialdesign.databinding.PictureOfTheDayBinding
 import com.example.mymaterialdesign.viewModel.PictureViewModel
 
-class PictureYesterday : Fragment() {
-    private var _binding: FragmentYesterdayBinding? = null
-    private val binding: FragmentYesterdayBinding
+class PictureDayFragment : Fragment() {
+
+    private var _binding: PictureOfTheDayBinding? = null
+    private val binding: PictureOfTheDayBinding
         get() {
             return _binding!!
         }
-    private var day: Int = 1
 
     private val liveData: PictureViewModel by lazy {
         ViewModelProvider(this).get(PictureViewModel::class.java)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentYesterdayBinding.inflate(inflater, container, false)
+        _binding = PictureOfTheDayBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,7 +38,8 @@ class PictureYesterday : Fragment() {
         liveData.getLiveData().observe(viewLifecycleOwner, {
             renderData(it)
         })
-        requestAPI()
+        liveData.modDateDay(0)
+        liveData.request()
     }
 
     private fun renderData(appStatePictureOfTheDay: AppStatePictureOfTheDay) {
@@ -52,29 +51,12 @@ class PictureYesterday : Fragment() {
             is AppStatePictureOfTheDay.Loading -> {
             }
             is AppStatePictureOfTheDay.Success -> {
-                setInfoDisplay(appStatePictureOfTheDay)
+                binding.pictureCustom.load(appStatePictureOfTheDay.pdoServerResponse.url) {
+                    placeholder(R.drawable.ic_no_photo_vector)
+                }
+                binding.explanation.text = appStatePictureOfTheDay.pdoServerResponse.explanation
+                binding.title.text = appStatePictureOfTheDay.pdoServerResponse.title
             }
-        }
-    }
-
-    private fun requestAPI() {
-        liveData.modDateDay(day)
-        liveData.request()
-    }
-
-    private fun setInfoDisplay(appStatePictureOfTheDay: AppStatePictureOfTheDay.Success) {
-
-        with(binding) {
-            imageYesterdayPicturePager.load(appStatePictureOfTheDay.pdoServerResponse.url) {
-                placeholder(R.drawable.ic_no_photo_vector)
-            }
-
-            titlePictureYesterdayPicturePager.text = appStatePictureOfTheDay.pdoServerResponse.title
-
-            includeMainFragmentPicturePager.title.text =
-                appStatePictureOfTheDay.pdoServerResponse.title
-            includeMainFragmentPicturePager.explanation.text =
-                appStatePictureOfTheDay.pdoServerResponse.explanation
         }
     }
 
@@ -82,4 +64,5 @@ class PictureYesterday : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
 }

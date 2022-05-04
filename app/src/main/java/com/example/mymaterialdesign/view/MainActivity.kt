@@ -1,7 +1,6 @@
 package com.example.mymaterialdesign.view
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
@@ -9,6 +8,7 @@ import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.ActivityMainBinding
 import com.example.mymaterialdesign.utils.*
 import com.example.mymaterialdesign.view.bottomSheetDialog.MyBottomSheetDialogSearchWiki
+import com.example.mymaterialdesign.view.materialDesingPictureOfTheDay.PictureDayFragment
 import com.example.mymaterialdesign.view.photoMars.PhotoMarsFragment
 import com.example.mymaterialdesign.view.pictureOfTheDay.PictureOfTheDayFragment
 import com.example.mymaterialdesign.view.settings.SettingFragment
@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragmentContainer, PictureOfTheDayFragment.newInstance())
-//                .addToBackStack(" ").commit()
-//            binding.bottomNavView.selectedItemId = R.id.imageDayMenuBottom
-//        }
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, PictureOfTheDayFragment.newInstance())
+                .addToBackStack(" ").commit()
+            binding.bottomNavView.selectedItemId = R.id.imageDayMenuBottomVP
+        }
         initNavigationBottom()
     }
 
@@ -44,12 +44,12 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             bottomNavView.setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.imageDayMenuBottom -> {
-                        toFragment(PictureDay())
+                    R.id.imageDayMenuBottomVP -> {
+                        toFragment(PictureOfTheDayFragment.newInstance())
                         true
                     }
-                    R.id.weatherMenuBottom -> {
-                        Toast.makeText(applicationContext, "Погода", Toast.LENGTH_LONG).show()
+                    R.id.imageDayMenuBottomMD -> {
+                        toFragment(PictureDayFragment())
                         true
                     }
                     R.id.settingMenuBottom -> {
