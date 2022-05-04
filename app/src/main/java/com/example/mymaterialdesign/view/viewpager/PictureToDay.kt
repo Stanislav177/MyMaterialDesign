@@ -10,6 +10,7 @@ import coil.load
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.databinding.FragmentToDayBinding
+import com.example.mymaterialdesign.utils.CLICK_TODAY
 import com.example.mymaterialdesign.viewModel.PictureViewModel
 
 class PictureToDay : Fragment() {
@@ -18,7 +19,6 @@ class PictureToDay : Fragment() {
         get() {
             return _binding!!
         }
-    private var day: Int = 0
 
     private val liveData: PictureViewModel by lazy {
         ViewModelProvider(this).get(PictureViewModel::class.java)
@@ -57,7 +57,7 @@ class PictureToDay : Fragment() {
     }
 
     private fun requestAPI() {
-        liveData.modDateDay(day)
+        liveData.modDateDay(CLICK_TODAY)
         liveData.request()
     }
 

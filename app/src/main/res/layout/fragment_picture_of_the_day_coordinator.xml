@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,14 +24,24 @@
                 android:id="@+id/pictureCustom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:background="@drawable/ic_no_photo_vector"/>
+                tools:background="@drawable/ic_no_photo_vector" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnYesterday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/yesterday"
+        app:layout_anchor="@id/appBar"
+        app:layout_anchorGravity="bottom|start"
+        app:layout_behavior=".view.behaviors.ButtonBehavior" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnToDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/today"
         app:layout_anchor="@id/appBar"
         app:layout_anchorGravity="bottom|end"
         app:layout_behavior=".view.behaviors.ButtonBehavior" />

@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.databinding.FragmentYesterdayBinding
+import com.example.mymaterialdesign.utils.CLICK_YESTERDAY
 import com.example.mymaterialdesign.viewModel.PictureViewModel
 
 class PictureYesterday : Fragment() {
@@ -19,7 +19,6 @@ class PictureYesterday : Fragment() {
         get() {
             return _binding!!
         }
-    private var day: Int = 1
 
     private val liveData: PictureViewModel by lazy {
         ViewModelProvider(this).get(PictureViewModel::class.java)
@@ -58,7 +57,7 @@ class PictureYesterday : Fragment() {
     }
 
     private fun requestAPI() {
-        liveData.modDateDay(day)
+        liveData.modDateDay(CLICK_YESTERDAY)
         liveData.request()
     }
 

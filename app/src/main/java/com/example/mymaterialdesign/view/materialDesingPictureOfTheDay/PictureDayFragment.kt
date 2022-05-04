@@ -9,13 +9,15 @@ import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
-import com.example.mymaterialdesign.databinding.PictureOfTheDayBinding
+import com.example.mymaterialdesign.databinding.FragmentPictureOfTheDayCoordinatorBinding
+import com.example.mymaterialdesign.view.viewpager.TO_DAY
+import com.example.mymaterialdesign.view.viewpager.YESTERDAY
 import com.example.mymaterialdesign.viewModel.PictureViewModel
 
 class PictureDayFragment : Fragment() {
 
-    private var _binding: PictureOfTheDayBinding? = null
-    private val binding: PictureOfTheDayBinding
+    private var _binding: FragmentPictureOfTheDayCoordinatorBinding? = null
+    private val binding: FragmentPictureOfTheDayCoordinatorBinding
         get() {
             return _binding!!
         }
@@ -29,7 +31,7 @@ class PictureDayFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = PictureOfTheDayBinding.inflate(inflater, container, false)
+        _binding = FragmentPictureOfTheDayCoordinatorBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,7 +40,12 @@ class PictureDayFragment : Fragment() {
         liveData.getLiveData().observe(viewLifecycleOwner, {
             renderData(it)
         })
-        liveData.modDateDay(0)
+        requestPictureLiveData(TO_DAY)
+        initBtn()
+    }
+
+    private fun requestPictureLiveData(i: Int) {
+        liveData.modDateDay(i)
         liveData.request()
     }
 
@@ -51,13 +58,27 @@ class PictureDayFragment : Fragment() {
             is AppStatePictureOfTheDay.Loading -> {
             }
             is AppStatePictureOfTheDay.Success -> {
-                binding.pictureCustom.load(appStatePictureOfTheDay.pdoServerResponse.url) {
-                    placeholder(R.drawable.ic_no_photo_vector)
+                with(binding) {
+                    pictureCustom.load(appStatePictureOfTheDay.pdoServerResponse.url) {
+                        placeholder(R.drawable.ic_no_photo_vector)
+                    }
+                    explanation.text = appStatePictureOfTheDay.pdoServerResponse.explanation
+                    title.text = appStatePictureOfTheDay.pdoServerResponse.title
                 }
-                binding.explanation.text = appStatePictureOfTheDay.pdoServerResponse.explanation
-                binding.title.text = appStatePictureOfTheDay.pdoServerResponse.title
             }
         }
+    }
+
+    private fun initBtn() {
+        with(binding) {
+            btnYesterday.setOnClickListener {
+                requestPictureLiveData(YESTERDAY)
+            }
+            btnToDay.setOnClickListener {
+                requestPictureLiveData(TO_DAY)
+            }
+        }
+
     }
 
     override fun onDestroy() {
