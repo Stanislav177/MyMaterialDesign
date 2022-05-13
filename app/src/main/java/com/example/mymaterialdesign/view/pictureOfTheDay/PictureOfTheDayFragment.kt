@@ -37,45 +37,52 @@ class PictureOfTheDayFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        initPagerViewPicture()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestAPI()
+
         initPagerViewPicture()
         binding.tabsPicture.setupWithViewPager(binding.viewPagerPicture)
         binding.tabsPicture.getTabAt(TO_DAY)?.setIcon(R.drawable.ic_image)
         binding.tabsPicture.getTabAt(YESTERDAY)?.setIcon(R.drawable.ic_image_yesterday)
+
     }
 
     private fun initPagerViewPicture() {
         binding.viewPagerPicture.adapter =
             ViewPagerPictureAdapter(requireActivity().supportFragmentManager)
 
-        binding.viewPagerPicture.addOnAdapterChangeListener(
-            object : ViewPager.OnPageChangeListener, ViewPager.OnAdapterChangeListener {
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-
-                }
-
-                override fun onPageSelected(position: Int) {
-
-                }
-
-                override fun onPageScrollStateChanged(state: Int) {
-
-                }
-
-                override fun onAdapterChanged(
-                    viewPager: ViewPager,
-                    oldAdapter: PagerAdapter?,
-                    newAdapter: PagerAdapter?
-                ) {
-                }
-            }
-        )
+//        binding.viewPagerPicture.addOnAdapterChangeListener(
+//            object : ViewPager.OnPageChangeListener, ViewPager.OnAdapterChangeListener {
+//                override fun onPageScrolled(
+//                    position: Int,
+//                    positionOffset: Float,
+//                    positionOffsetPixels: Int
+//                ) {
+//
+//                }
+//
+//                override fun onPageSelected(position: Int) {
+//
+//                }
+//
+//                override fun onPageScrollStateChanged(state: Int) {
+//
+//                }
+//
+//                override fun onAdapterChanged(
+//                    viewPager: ViewPager,
+//                    oldAdapter: PagerAdapter?,
+//                    newAdapter: PagerAdapter?
+//                ) {
+//                }
+//            }
+//        )
     }
 
     private fun requestAPI() {

@@ -8,7 +8,7 @@ const val TO_DAY = 0
 const val YESTERDAY = 1
 
 
-class ViewPagerPictureAdapter(private val fragmentManager: FragmentManager) :
+class ViewPagerPictureAdapter(fragmentManager: FragmentManager) :
     FragmentStatePagerAdapter(fragmentManager) {
 
     private val listFragments = arrayListOf(PictureToDay(), PictureYesterday())

@@ -42,6 +42,7 @@ class PictureDayFragment : Fragment() {
         })
         requestPictureLiveData(TO_DAY)
         initBtn()
+
     }
 
     private fun requestPictureLiveData(i: Int) {

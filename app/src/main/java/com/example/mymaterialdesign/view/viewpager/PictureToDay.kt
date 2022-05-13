@@ -11,9 +11,11 @@ import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.appState.AppStatePictureOfTheDay
 import com.example.mymaterialdesign.databinding.FragmentToDayBinding
 import com.example.mymaterialdesign.utils.CLICK_TODAY
+import com.example.mymaterialdesign.view.materialDesingPictureOfTheDay.ZoomPictureFragment
 import com.example.mymaterialdesign.viewModel.PictureViewModel
 
 class PictureToDay : Fragment() {
+    private var url: String? = null
     private var _binding: FragmentToDayBinding? = null
     private val binding: FragmentToDayBinding
         get() {
@@ -28,7 +30,7 @@ class PictureToDay : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentToDayBinding.inflate(inflater, container, false)
         return binding.root
@@ -40,6 +42,17 @@ class PictureToDay : Fragment() {
             renderData(it)
         })
         requestAPI()
+
+        binding.imageToDayPicturePager.setOnClickListener {
+            tofrag()
+        }
+    }
+
+    private fun tofrag() {
+        requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
+            .replace(R.id.fragmentContainer, ZoomPictureFragment.newInstance(Bundle().apply {
+                putString("URL", url)
+            })).commit()
     }
 
     private fun renderData(appStatePictureOfTheDay: AppStatePictureOfTheDay) {
@@ -51,6 +64,7 @@ class PictureToDay : Fragment() {
             is AppStatePictureOfTheDay.Loading -> {
             }
             is AppStatePictureOfTheDay.Success -> {
+                url = appStatePictureOfTheDay.pdoServerResponse.url
                 setInfoDisplay(appStatePictureOfTheDay)
             }
         }

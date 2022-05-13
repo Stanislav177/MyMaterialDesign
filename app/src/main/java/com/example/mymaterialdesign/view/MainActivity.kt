@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
+import androidx.transition.TransitionManager
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.ActivityMainBinding
 import com.example.mymaterialdesign.utils.*
@@ -29,15 +30,17 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, PictureOfTheDayFragment.newInstance())
-                .addToBackStack(" ").commit()
+                .commit()
             binding.bottomNavView.selectedItemId = R.id.imageDayMenuBottomVP
         }
         initNavigationBottom()
+
+
     }
 
     private fun toFragment(f: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, f).addToBackStack(" ").commit()
+            .replace(R.id.fragmentContainer, f).commit()
     }
 
     private fun initNavigationBottom() {

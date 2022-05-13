@@ -62,4 +62,6 @@
         Goddard Space Flight Center. More information regarding the API and retrieval
         of the imagery for download can be found on the EPIC website.\n\n
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
