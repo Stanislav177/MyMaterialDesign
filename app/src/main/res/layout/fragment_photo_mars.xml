@@ -6,30 +6,65 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="52dp"
+        android:background="@color/white"
+        android:stateListAnimator="@animator/toolbar_elevation">
 
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvBtnDate"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_marginTop="7dp"
-            android:textSize="25sp"
-            tools:text="DATA" />
+            android:gravity="center|top"
+            android:text="Header"
+            android:textSize="30sp" />
+    </FrameLayout>
 
-    </LinearLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/photoMarsRecycler"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_photo_mars" />
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/transparentBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:clickable="false">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/photoMarsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_photo_mars" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/calendarDatePict"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:src="@drawable/ic_edit_calendar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Выбор даты" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
