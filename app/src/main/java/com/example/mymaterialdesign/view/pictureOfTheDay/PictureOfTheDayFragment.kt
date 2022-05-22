@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.FragmentPictureOfTheDayBinding
 import com.example.mymaterialdesign.view.viewpager.TO_DAY
@@ -31,7 +29,7 @@ class PictureOfTheDayFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentPictureOfTheDayBinding.inflate(inflater, container, false)
         return binding.root
@@ -41,6 +39,7 @@ class PictureOfTheDayFragment : Fragment() {
         super.onStart()
         initPagerViewPicture()
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

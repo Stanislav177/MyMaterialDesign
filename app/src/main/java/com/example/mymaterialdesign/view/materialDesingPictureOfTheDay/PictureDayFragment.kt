@@ -79,7 +79,6 @@ class PictureDayFragment : Fragment() {
                 requestPictureLiveData(TO_DAY)
             }
         }
-
     }
 
     override fun onDestroy() {

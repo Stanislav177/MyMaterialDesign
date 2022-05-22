@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
-import androidx.transition.TransitionManager
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.ActivityMainBinding
 import com.example.mymaterialdesign.utils.*
+import com.example.mymaterialdesign.view.animationPictureToDay.AnimationPictureFragment
 import com.example.mymaterialdesign.view.bottomSheetDialog.MyBottomSheetDialogSearchWiki
 import com.example.mymaterialdesign.view.materialDesingPictureOfTheDay.PictureDayFragment
 import com.example.mymaterialdesign.view.photoMars.PhotoMarsFragment
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.imageDayMenuBottomMD -> {
-                        toFragment(PictureDayFragment())
+                        toFragment(IntermFragment())
                         true
                     }
                     R.id.settingMenuBottom -> {
