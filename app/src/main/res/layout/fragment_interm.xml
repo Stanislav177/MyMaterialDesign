@@ -25,5 +25,11 @@
         android:layout_height="wrap_content"
         android:text="Picture of the day animation" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/listWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Список заметок" />
+
 
 </LinearLayout>
