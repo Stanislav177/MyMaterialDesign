@@ -12,8 +12,8 @@ import com.example.mymaterialdesign.toDoList.repository.OnClickItemUpDownPositio
 import com.example.mymaterialdesign.toDoList.repository.OnClickListenerWorkItem
 
 class AdapterToDoListWork(
-    val onClickListenerWorkItem: OnClickListenerWorkItem,
-    val onClickItemUpDownPosition: OnClickItemUpDownPosition,
+    private val onClickListenerWorkItem: OnClickListenerWorkItem,
+    private val onClickItemUpDownPosition: OnClickItemUpDownPosition,
 ) :
     RecyclerView.Adapter<AdapterToDoListWork.BaseOnBindViewHolder>() {
 
@@ -58,19 +58,27 @@ class AdapterToDoListWork(
     override fun getItemCount() = dataListWork.size
 
     private fun downItemList(pos: Int) {
-        dataListWork.removeAt(pos).apply {
-            dataListWork.add(pos + 1, this)
-            notifyItemMoved(pos, pos + 1)
+        if (itemCount > pos + 1) {
+            dataListWork.removeAt(pos).apply {
+                dataListWork.add(pos + 1, this)
+                notifyItemMoved(pos, pos + 1)
+            }
+            onClickItemUpDownPosition.onClick(pos + 1, true)
+        } else {
+            onClickItemUpDownPosition.onClick(pos + 1, false)
         }
-        onClickItemUpDownPosition.onClick(pos + 1)
     }
 
     private fun upItemList(pos: Int) {
-        dataListWork.removeAt(pos).apply {
-            dataListWork.add(pos - 1, this)
-            notifyItemMoved(pos, pos - 1)
+        if (pos - 1 > -1) {
+            dataListWork.removeAt(pos).apply {
+                dataListWork.add(pos - 1, this)
+                notifyItemMoved(pos, pos - 1)
+            }
+            onClickItemUpDownPosition.onClick(pos - 1, true)
+        } else {
+            onClickItemUpDownPosition.onClick(pos - 1, false)
         }
-        onClickItemUpDownPosition.onClick(pos - 1)
     }
 
     inner class NoImageItemViewHolder(view: View) : BaseOnBindViewHolder(view) {
@@ -113,9 +121,7 @@ class AdapterToDoListWork(
                 btnDownNote.setOnClickListener {
                     downItemList(layoutPosition)
                 }
-
             }
-
         }
     }
 

@@ -19,7 +19,7 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
 
     private var listWorkData: MutableList<ListWork> = arrayListOf()
     private val adapter: AdapterToDoListWork by lazy {
-        AdapterToDoListWork(this,this)
+        AdapterToDoListWork(this, this)
     }
 
     private var _binding: FragmentWorkListBinding? = null
@@ -48,7 +48,7 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
         fabAddListWorkItem = requireActivity().findViewById(R.id.fabBtn)
         fabAddListWorkItem!!.visibility = View.VISIBLE
         fabAddListWorkItem!!.setOnClickListener {
-            adapter.addItemWork(ListWork(TYPE_YES_IMAGE,10,"НОВЫЙ ","НОВЫЙ текст"))
+            adapter.addItemWork(ListWork(TYPE_YES_IMAGE, 10, "НОВЫЙ ", "НОВЫЙ текст"))
             binding.recyclerToDoList.scrollToPosition(adapter.itemCount - 1)
             Toast.makeText(requireContext(), "   ", Toast.LENGTH_LONG).show()
 
@@ -74,7 +74,19 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
         Toast.makeText(requireContext(), dataListWork.nameWork, Toast.LENGTH_LONG).show()
     }
 
-    override fun onClick(pos: Int) {
-        binding.recyclerToDoList.scrollToPosition(pos)
+    override fun onClick(pos: Int, moving: Boolean) {
+        if (moving) {
+            binding.recyclerToDoList.scrollToPosition(pos)
+            Toast.makeText(requireContext(), "Заметка на позиции - $pos", Toast.LENGTH_LONG)
+                .show()
+        } else {
+            if (pos > 0){
+                Toast.makeText(requireContext(), "Это самая крайняя заметка", Toast.LENGTH_LONG)
+                    .show()
+            }else{
+                Toast.makeText(requireContext(), "Это самая первая заметка", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 }
