@@ -7,22 +7,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.mymaterialdesign.R
-import com.example.mymaterialdesign.databinding.FragmentToDoListBinding
+import com.example.mymaterialdesign.databinding.FragmentWorkListBinding
 import com.example.mymaterialdesign.toDoList.model.ListWork
 import com.example.mymaterialdesign.toDoList.model.TYPE_NO_IMAGE
 import com.example.mymaterialdesign.toDoList.model.TYPE_YES_IMAGE
+import com.example.mymaterialdesign.toDoList.repository.OnClickItemUpDownPosition
 import com.example.mymaterialdesign.toDoList.repository.OnClickListenerWorkItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ToDoListFragment : Fragment(), OnClickListenerWorkItem {
+class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownPosition {
 
-    private var listWorkData: List<ListWork> = arrayListOf()
+    private var listWorkData: MutableList<ListWork> = arrayListOf()
     private val adapter: AdapterToDoListWork by lazy {
-        AdapterToDoListWork(this)
+        AdapterToDoListWork(this,this)
     }
 
-    private var _binding: FragmentToDoListBinding? = null
-    private val binding: FragmentToDoListBinding
+    private var _binding: FragmentWorkListBinding? = null
+    private val binding: FragmentWorkListBinding
         get() {
             return _binding!!
         }
@@ -31,7 +32,7 @@ class ToDoListFragment : Fragment(), OnClickListenerWorkItem {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentToDoListBinding.inflate(inflater, container, false)
+        _binding = FragmentWorkListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -47,7 +48,10 @@ class ToDoListFragment : Fragment(), OnClickListenerWorkItem {
         fabAddListWorkItem = requireActivity().findViewById(R.id.fabBtn)
         fabAddListWorkItem!!.visibility = View.VISIBLE
         fabAddListWorkItem!!.setOnClickListener {
+            adapter.addItemWork(ListWork(TYPE_YES_IMAGE,10,"НОВЫЙ ","НОВЫЙ текст"))
+            binding.recyclerToDoList.scrollToPosition(adapter.itemCount - 1)
             Toast.makeText(requireContext(), "   ", Toast.LENGTH_LONG).show()
+
         }
     }
 
@@ -68,5 +72,9 @@ class ToDoListFragment : Fragment(), OnClickListenerWorkItem {
 
     override fun onItemClick(dataListWork: ListWork) {
         Toast.makeText(requireContext(), dataListWork.nameWork, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onClick(pos: Int) {
+        binding.recyclerToDoList.scrollToPosition(pos)
     }
 }

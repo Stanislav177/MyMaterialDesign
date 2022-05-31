@@ -8,21 +8,34 @@ import com.example.mymaterialdesign.databinding.ItemToDoListBinding
 import com.example.mymaterialdesign.databinding.ItemToDoListIcImageBinding
 import com.example.mymaterialdesign.toDoList.model.ListWork
 import com.example.mymaterialdesign.toDoList.model.TYPE_NO_IMAGE
+import com.example.mymaterialdesign.toDoList.repository.OnClickItemUpDownPosition
 import com.example.mymaterialdesign.toDoList.repository.OnClickListenerWorkItem
 
-class AdapterToDoListWork(val onClickListenerWorkItem: OnClickListenerWorkItem) :
+class AdapterToDoListWork(
+    val onClickListenerWorkItem: OnClickListenerWorkItem,
+    val onClickItemUpDownPosition: OnClickItemUpDownPosition,
+) :
     RecyclerView.Adapter<AdapterToDoListWork.BaseOnBindViewHolder>() {
 
-    private var dataListWork: List<ListWork> = arrayListOf()
+    private var dataListWork: MutableList<ListWork> = arrayListOf()
 
     override fun getItemViewType(position: Int): Int {
         return dataListWork[position].viewType
     }
 
-    fun setDataListWork(data: List<ListWork>) {
+    fun setDataListWork(data: MutableList<ListWork>) {
         this.dataListWork = data
     }
 
+    fun addItemWork(itemWork: ListWork) {
+        dataListWork.add(itemWork)
+        notifyItemInserted(itemCount - 1)
+    }
+
+    private fun removeItemWork(position: Int) {
+        dataListWork.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseOnBindViewHolder {
         return if (TYPE_NO_IMAGE == viewType) {
@@ -38,31 +51,67 @@ class AdapterToDoListWork(val onClickListenerWorkItem: OnClickListenerWorkItem) 
         }
     }
 
+    override fun onBindViewHolder(holder: BaseOnBindViewHolder, position: Int) {
+        holder.onBind(dataListWork[position])
+    }
 
     override fun getItemCount() = dataListWork.size
 
+    private fun downItemList(pos: Int) {
+        dataListWork.removeAt(pos).apply {
+            dataListWork.add(pos + 1, this)
+            notifyItemMoved(pos, pos + 1)
+        }
+        onClickItemUpDownPosition.onClick(pos + 1)
+    }
+
+    private fun upItemList(pos: Int) {
+        dataListWork.removeAt(pos).apply {
+            dataListWork.add(pos - 1, this)
+            notifyItemMoved(pos, pos - 1)
+        }
+        onClickItemUpDownPosition.onClick(pos - 1)
+    }
 
     inner class NoImageItemViewHolder(view: View) : BaseOnBindViewHolder(view) {
         override fun onBind(listItem: ListWork) {
             ItemToDoListBinding.bind(itemView).apply {
                 nameNote.text = listItem.nameWork
-                textNote2.text = listItem.textWork
-                positionItem.setOnClickListener {
+                textNote.text = listItem.textWork
+                nameNote.setOnClickListener {
                     onClickListenerWorkItem.onItemClick(listItem)
-                    textNote2.visibility = View.VISIBLE
+                    textNote.visibility = View.VISIBLE
+                }
+                btnDeleteNote.setOnClickListener {
+                    removeItemWork(layoutPosition)
+                }
+                btnUpNote.setOnClickListener {
+                    upItemList(layoutPosition)
+                }
+
+                btnDownNote.setOnClickListener {
+                    downItemList(layoutPosition)
                 }
             }
         }
     }
+
 
     inner class ImageItemViewHolder(view: View) : BaseOnBindViewHolder(view) {
         override fun onBind(listItem: ListWork) {
             ItemToDoListIcImageBinding.bind(itemView).apply {
                 nameNote.text = listItem.textWork
-                textNote2.text = listItem.textWork
-                positionItem.setOnClickListener {
+                textNote.text = listItem.textWork
+                nameNote.setOnClickListener {
                     onClickListenerWorkItem.onItemClick(listItem)
-                    textNote2.visibility = View.VISIBLE
+                    textNote.visibility = View.VISIBLE
+                }
+                btnUpNote.setOnClickListener {
+                    upItemList(layoutPosition)
+                }
+
+                btnDownNote.setOnClickListener {
+                    downItemList(layoutPosition)
                 }
 
             }
@@ -70,12 +119,7 @@ class AdapterToDoListWork(val onClickListenerWorkItem: OnClickListenerWorkItem) 
         }
     }
 
-
     abstract class BaseOnBindViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun onBind(listItem: ListWork)
-    }
-
-    override fun onBindViewHolder(holder: BaseOnBindViewHolder, position: Int) {
-        holder.onBind(dataListWork[position])
     }
 }

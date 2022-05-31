@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.FragmentIntermBinding
-import com.example.mymaterialdesign.toDoList.view.ToDoListFragment
+import com.example.mymaterialdesign.toDoList.view.WorkListFragment
 import com.example.mymaterialdesign.view.animationPictureToDay.AnimationPictureFragment
 import com.example.mymaterialdesign.view.materialDesingPictureOfTheDay.PictureDayFragment
 
@@ -38,7 +38,7 @@ class IntermFragment : Fragment() {
                 toFragment(AnimationPictureFragment())
             }
             listWork.setOnClickListener {
-                toFragment(ToDoListFragment())
+                toFragment(WorkListFragment())
             }
         }
 
