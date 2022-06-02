@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.FragmentWorkListBinding
+import com.example.mymaterialdesign.toDoList.model.CLOSE_ITEM
 import com.example.mymaterialdesign.toDoList.model.ListWork
 import com.example.mymaterialdesign.toDoList.model.TYPE_NO_IMAGE
 import com.example.mymaterialdesign.toDoList.model.TYPE_YES_IMAGE
@@ -17,7 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownPosition {
 
-    private var listWorkData: MutableList<ListWork> = arrayListOf()
+    private var listWorkData: MutableList<Pair<Boolean, ListWork>> = arrayListOf()
     private val adapter: AdapterToDoListWork by lazy {
         AdapterToDoListWork(this, this)
     }
@@ -48,7 +49,8 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
         fabAddListWorkItem = requireActivity().findViewById(R.id.fabBtn)
         fabAddListWorkItem!!.visibility = View.VISIBLE
         fabAddListWorkItem!!.setOnClickListener {
-            adapter.addItemWork(ListWork(TYPE_YES_IMAGE, 10, "НОВЫЙ ", "НОВЫЙ текст"))
+            adapter.addItemWork(Pair(CLOSE_ITEM,
+                ListWork(TYPE_YES_IMAGE, 10, "НОВЫЙ ", "НОВЫЙ текст")))
             binding.recyclerToDoList.scrollToPosition(adapter.itemCount - 1)
             Toast.makeText(requireContext(), "   ", Toast.LENGTH_LONG).show()
 
@@ -57,16 +59,16 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
 
     private fun initWorkList() {
         listWorkData = arrayListOf(
-            ListWork(TYPE_NO_IMAGE, 1, "Заметка 1", "Текст заметки 1"),
-            ListWork(TYPE_NO_IMAGE, 2, "Заметка 2", "Текст заметки 2"),
-            ListWork(TYPE_YES_IMAGE, 3, "Заметка 3", "Текст заметки 3"),
-            ListWork(TYPE_YES_IMAGE, 4, "Заметка 4", "Текст заметки 4"),
-            ListWork(TYPE_NO_IMAGE, 5, "Заметка 5", "Текст заметки 5"),
-            ListWork(TYPE_NO_IMAGE, 6, "Заметка 6", "Текст заметки 6"),
-            ListWork(TYPE_NO_IMAGE, 7, "Заметка 7", "Текст заметки 7"),
-            ListWork(TYPE_YES_IMAGE, 8, "Заметка 8", "Текст заметки 8"),
-            ListWork(TYPE_YES_IMAGE, 9, "Заметка 9", "Текст заметки 9"),
-            ListWork(TYPE_YES_IMAGE, 10, "Заметка 10", "Текст заметки 10")
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 1, "Заметка 1", "Текст заметки 1")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 2, "Заметка 2", "Текст заметки 2")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 3, "Заметка 3", "Текст заметки 3")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 4, "Заметка 4", "Текст заметки 4")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 5, "Заметка 5", "Текст заметки 5")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 6, "Заметка 6", "Текст заметки 6")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 7, "Заметка 7", "Текст заметки 7")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 8, "Заметка 8", "Текст заметки 8")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 9, "Заметка 9", "Текст заметки 9")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 10, "Заметка 10", "Текст заметки 10"))
         )
     }
 
@@ -80,10 +82,10 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
             Toast.makeText(requireContext(), "Заметка на позиции - $pos", Toast.LENGTH_LONG)
                 .show()
         } else {
-            if (pos > 0){
+            if (pos > 0) {
                 Toast.makeText(requireContext(), "Это самая крайняя заметка", Toast.LENGTH_LONG)
                     .show()
-            }else{
+            } else {
                 Toast.makeText(requireContext(), "Это самая первая заметка", Toast.LENGTH_LONG)
                     .show()
             }

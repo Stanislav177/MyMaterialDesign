@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymaterialdesign.databinding.ItemToDoListBinding
 import com.example.mymaterialdesign.databinding.ItemToDoListIcImageBinding
+import com.example.mymaterialdesign.toDoList.model.CLOSE_ITEM
 import com.example.mymaterialdesign.toDoList.model.ListWork
+import com.example.mymaterialdesign.toDoList.model.OPEN_ITEM
 import com.example.mymaterialdesign.toDoList.model.TYPE_NO_IMAGE
 import com.example.mymaterialdesign.toDoList.repository.OnClickItemUpDownPosition
 import com.example.mymaterialdesign.toDoList.repository.OnClickListenerWorkItem
@@ -17,17 +19,17 @@ class AdapterToDoListWork(
 ) :
     RecyclerView.Adapter<AdapterToDoListWork.BaseOnBindViewHolder>() {
 
-    private var dataListWork: MutableList<ListWork> = arrayListOf()
+    private var dataListWork: MutableList<Pair<Boolean, ListWork>> = arrayListOf()
 
     override fun getItemViewType(position: Int): Int {
-        return dataListWork[position].viewType
+        return dataListWork[position].second.viewType
     }
 
-    fun setDataListWork(data: MutableList<ListWork>) {
+    fun setDataListWork(data: MutableList<Pair<Boolean, ListWork>>) {
         this.dataListWork = data
     }
 
-    fun addItemWork(itemWork: ListWork) {
+    fun addItemWork(itemWork: Pair<Boolean, ListWork>) {
         dataListWork.add(itemWork)
         notifyItemInserted(itemCount - 1)
     }
@@ -82,14 +84,21 @@ class AdapterToDoListWork(
     }
 
     inner class NoImageItemViewHolder(view: View) : BaseOnBindViewHolder(view) {
-        override fun onBind(listItem: ListWork) {
+        override fun onBind(listItem: Pair<Boolean, ListWork>) {
             ItemToDoListBinding.bind(itemView).apply {
-                nameNote.text = listItem.nameWork
-                textNote.text = listItem.textWork
+                nameNote.text = listItem.second.nameWork
+                textNote.text = listItem.second.textWork
+
                 nameNote.setOnClickListener {
-                    onClickListenerWorkItem.onItemClick(listItem)
-                    textNote.visibility = View.VISIBLE
+                    dataListWork[layoutPosition] = dataListWork[layoutPosition].let {
+                        Pair(if (it.first == CLOSE_ITEM) OPEN_ITEM else CLOSE_ITEM, it.second)
+
+                    }
+                    notifyItemChanged(layoutPosition)
                 }
+                textNote.visibility =
+                    if (dataListWork[layoutPosition].first == CLOSE_ITEM) View.GONE else View.VISIBLE
+
                 btnDeleteNote.setOnClickListener {
                     removeItemWork(layoutPosition)
                 }
@@ -106,14 +115,19 @@ class AdapterToDoListWork(
 
 
     inner class ImageItemViewHolder(view: View) : BaseOnBindViewHolder(view) {
-        override fun onBind(listItem: ListWork) {
+        override fun onBind(listItem: Pair<Boolean, ListWork>) {
             ItemToDoListIcImageBinding.bind(itemView).apply {
-                nameNote.text = listItem.textWork
-                textNote.text = listItem.textWork
+                nameNote.text = listItem.second.nameWork
+                textNote.text = listItem.second.textWork
                 nameNote.setOnClickListener {
-                    onClickListenerWorkItem.onItemClick(listItem)
-                    textNote.visibility = View.VISIBLE
+                    dataListWork[layoutPosition] = dataListWork[layoutPosition].let {
+                        Pair(if (it.first == CLOSE_ITEM) OPEN_ITEM else CLOSE_ITEM, it.second)
+
+                    }
+                    notifyItemChanged(layoutPosition)
                 }
+                textNote.visibility =
+                    if (dataListWork[layoutPosition].first == CLOSE_ITEM) View.GONE else View.VISIBLE
                 btnUpNote.setOnClickListener {
                     upItemList(layoutPosition)
                 }
@@ -126,6 +140,6 @@ class AdapterToDoListWork(
     }
 
     abstract class BaseOnBindViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun onBind(listItem: ListWork)
+        abstract fun onBind(listItem: Pair<Boolean, ListWork>)
     }
 }
