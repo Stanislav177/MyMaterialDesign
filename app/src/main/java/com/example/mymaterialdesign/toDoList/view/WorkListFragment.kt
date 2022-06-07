@@ -6,29 +6,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.FragmentWorkListBinding
 import com.example.mymaterialdesign.toDoList.model.CLOSE_ITEM
 import com.example.mymaterialdesign.toDoList.model.ListWork
 import com.example.mymaterialdesign.toDoList.model.TYPE_NO_IMAGE
 import com.example.mymaterialdesign.toDoList.model.TYPE_YES_IMAGE
-import com.example.mymaterialdesign.toDoList.repository.OnClickItemUpDownPosition
-import com.example.mymaterialdesign.toDoList.repository.OnClickListenerWorkItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownPosition {
-
-    private var listWorkData: MutableList<Pair<Boolean, ListWork>> = arrayListOf()
-    private val adapter: AdapterToDoListWork by lazy {
-        AdapterToDoListWork(this, this)
-    }
+class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
 
     private var _binding: FragmentWorkListBinding? = null
     private val binding: FragmentWorkListBinding
         get() {
             return _binding!!
         }
+
+    private var listWorkData: MutableList<Pair<Boolean, ListWork>> = arrayListOf()
+
+    private lateinit var adapter: AdapterToDoListWork
+
     private var fabAddListWorkItem: FloatingActionButton? = null
+    lateinit var itemTouch: ItemTouchHelper
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -39,10 +42,15 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        adapter = AdapterToDoListWork(this)
         binding.recyclerToDoList.adapter = adapter
         initWorkList()
         adapter.setDataListWork(listWorkData)
         initFabBtnAddItemWork()
+
+        itemTouch = ItemTouchHelper(ItemTouchHelperCallback(adapter))
+        itemTouch.attachToRecyclerView(binding.recyclerToDoList)
     }
 
     private fun initFabBtnAddItemWork() {
@@ -72,10 +80,6 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
         )
     }
 
-    override fun onItemClick(dataListWork: ListWork) {
-        Toast.makeText(requireContext(), dataListWork.nameWork, Toast.LENGTH_LONG).show()
-    }
-
     override fun onClick(pos: Int, moving: Boolean) {
         if (moving) {
             binding.recyclerToDoList.scrollToPosition(pos)
@@ -89,6 +93,35 @@ class WorkListFragment : Fragment(), OnClickListenerWorkItem, OnClickItemUpDownP
                 Toast.makeText(requireContext(), "Это самая первая заметка", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    class ItemTouchHelperCallback(private val adapterItem: AdapterToDoListWork) :
+        ItemTouchHelper.Callback() {
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+        ): Int {
+            /*  Два дня потратил из-за свой невнимательности...
+            уже новое приложение написал с этой функцией и только потом увидел где проблема
+            val swipe = ItemTouchHelper.DOWN or ItemTouchHelper.UP
+            val drag = ItemTouchHelper.START or ItemTouchHelper.END */
+
+            val swipe = ItemTouchHelper.START or ItemTouchHelper.END
+            val drag = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+            return makeMovementFlags(drag, swipe)
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder,
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            adapterItem.onItemDismiss(viewHolder.adapterPosition)
         }
     }
 }

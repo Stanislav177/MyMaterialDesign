@@ -10,14 +10,11 @@ import com.example.mymaterialdesign.toDoList.model.CLOSE_ITEM
 import com.example.mymaterialdesign.toDoList.model.ListWork
 import com.example.mymaterialdesign.toDoList.model.OPEN_ITEM
 import com.example.mymaterialdesign.toDoList.model.TYPE_NO_IMAGE
-import com.example.mymaterialdesign.toDoList.repository.OnClickItemUpDownPosition
-import com.example.mymaterialdesign.toDoList.repository.OnClickListenerWorkItem
+import com.example.mymaterialdesign.toDoList.touchHelper.ItemTouchHelperAdapter
 
 class AdapterToDoListWork(
-    private val onClickListenerWorkItem: OnClickListenerWorkItem,
     private val onClickItemUpDownPosition: OnClickItemUpDownPosition,
-) :
-    RecyclerView.Adapter<AdapterToDoListWork.BaseOnBindViewHolder>() {
+) : RecyclerView.Adapter<AdapterToDoListWork.BaseOnBindViewHolder>(), ItemTouchHelperAdapter {
 
     private var dataListWork: MutableList<Pair<Boolean, ListWork>> = arrayListOf()
 
@@ -40,16 +37,16 @@ class AdapterToDoListWork(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseOnBindViewHolder {
-        return if (TYPE_NO_IMAGE == viewType) {
+        if (TYPE_NO_IMAGE == viewType) {
             val itemBinding: ItemToDoListBinding =
                 ItemToDoListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            NoImageItemViewHolder(itemBinding.root)
+            return NoImageItemViewHolder(itemBinding.root)
         } else {
             val itemBinding: ItemToDoListIcImageBinding =
                 ItemToDoListIcImageBinding.inflate(LayoutInflater.from(parent.context),
                     parent,
                     false)
-            ImageItemViewHolder(itemBinding.root)
+            return ImageItemViewHolder(itemBinding.root)
         }
     }
 
@@ -142,4 +139,17 @@ class AdapterToDoListWork(
     abstract class BaseOnBindViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun onBind(listItem: Pair<Boolean, ListWork>)
     }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        dataListWork.removeAt(fromPosition).apply {
+            dataListWork.add(toPosition, this)
+            notifyItemMoved(fromPosition, toPosition)
+        }
+    }
+
+    override fun onItemDismiss(position: Int) {
+        dataListWork.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
 }
