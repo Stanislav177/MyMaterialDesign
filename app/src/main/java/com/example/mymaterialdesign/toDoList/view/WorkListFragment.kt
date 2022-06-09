@@ -1,5 +1,8 @@
 package com.example.mymaterialdesign.toDoList.view
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +18,7 @@ import com.example.mymaterialdesign.toDoList.model.CLOSE_ITEM
 import com.example.mymaterialdesign.toDoList.model.ListWork
 import com.example.mymaterialdesign.toDoList.model.TYPE_NO_IMAGE
 import com.example.mymaterialdesign.toDoList.model.TYPE_YES_IMAGE
+import com.example.mymaterialdesign.toDoList.touchHelper.ItemTouchHelperViewAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
@@ -24,6 +28,8 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
         get() {
             return _binding!!
         }
+
+    private var flag = false
 
     private var listWorkData: MutableList<Pair<Boolean, ListWork>> = arrayListOf()
 
@@ -51,17 +57,97 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
 
         itemTouch = ItemTouchHelper(ItemTouchHelperCallback(adapter))
         itemTouch.attachToRecyclerView(binding.recyclerToDoList)
+
+        binding.workMenu.alpha = 0f
+        offClickable()
+
+    }
+
+    private fun offClickable() {
+        binding.addWorkList.isClickable = false
+        binding.sortedDate.isClickable = false
+        binding.sortedName.isClickable = false
+        binding.sortedLabel.isClickable = false
+    }
+
+    private fun onClickable() {
+        binding.addWorkList.isClickable = true
+        binding.sortedDate.isClickable = true
+        binding.sortedName.isClickable = true
+        binding.sortedLabel.isClickable = true
     }
 
     private fun initFabBtnAddItemWork() {
         fabAddListWorkItem = requireActivity().findViewById(R.id.fabBtn)
         fabAddListWorkItem!!.visibility = View.VISIBLE
         fabAddListWorkItem!!.setOnClickListener {
-            adapter.addItemWork(Pair(CLOSE_ITEM,
-                ListWork(TYPE_YES_IMAGE, 10, "НОВЫЙ ", "НОВЫЙ текст")))
-            binding.recyclerToDoList.scrollToPosition(adapter.itemCount - 1)
-            Toast.makeText(requireContext(), "   ", Toast.LENGTH_LONG).show()
 
+            flag = !flag
+
+            if (flag) {
+                binding.recyclerToDoList.animate().alpha(0.8f).setDuration(2500L)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            binding.recyclerToDoList.layoutManager.apply {
+                                it.isScrollContainer = false
+                            }
+                            super.onAnimationEnd(animation)
+                        }
+                    })
+                ObjectAnimator.ofFloat(fabAddListWorkItem, View.ROTATION, 0f, 200f)
+                    .setDuration(2000L).start()
+                ObjectAnimator.ofFloat(binding.workMenu, View.TRANSLATION_Y, 0f, -300f)
+                    .setDuration(2500L).start()
+                binding.workMenu
+                    .animate()
+                    .alpha(1f)
+                    .setDuration(2000L)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            onClickable()
+                            initMenuWork()
+
+                            super.onAnimationEnd(animation)
+                        }
+
+                        private fun initMenuWork() {
+                            binding.addWorkList.setOnClickListener {
+                                adapter.addItemWork(Pair(CLOSE_ITEM,
+                                    ListWork(TYPE_YES_IMAGE, 10, "НОВЫЙ ", "НОВЫЙ текст")))
+                                binding.recyclerToDoList.scrollToPosition(adapter.itemCount - 1)
+
+                            }
+                            binding.sortedDate.setOnClickListener { }
+                            binding.sortedName.setOnClickListener { }
+                            binding.sortedLabel.setOnClickListener { }
+                        }
+                    })
+
+            } else {
+                binding.recyclerToDoList.animate().alpha(1f).setDuration(2500L)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            binding.recyclerToDoList.layoutManager.apply {
+                                it.canScrollVertically(1)
+                            }
+                            super.onAnimationEnd(animation)
+                        }
+                    })
+                ObjectAnimator.ofFloat(fabAddListWorkItem, View.ROTATION, 180f, 0f)
+                    .setDuration(2000L).start()
+                ObjectAnimator.ofFloat(binding.workMenu, View.TRANSLATION_Y, -300f, 0f)
+                    .setDuration(2500L).start()
+                binding.workMenu
+                    .animate()
+                    .alpha(0f)
+                    .setDuration(2000L)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            offClickable()
+                            super.onAnimationEnd(animation)
+                        }
+                    })
+            }
         }
     }
 
@@ -117,11 +203,24 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder,
         ): Boolean {
-            return false
+            adapterItem.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
+            return true
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             adapterItem.onItemDismiss(viewHolder.adapterPosition)
+        }
+
+        override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+            if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+                (viewHolder as ItemTouchHelperViewAdapter).onItemSelected()
+            }
+            super.onSelectedChanged(viewHolder, actionState)
+        }
+
+        override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+            (viewHolder as ItemTouchHelperViewAdapter).onItemClear()
+            super.clearView(recyclerView, viewHolder)
         }
     }
 }

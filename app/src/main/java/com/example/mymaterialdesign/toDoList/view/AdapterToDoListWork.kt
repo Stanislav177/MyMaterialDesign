@@ -1,5 +1,6 @@
 package com.example.mymaterialdesign.toDoList.view
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.example.mymaterialdesign.toDoList.model.ListWork
 import com.example.mymaterialdesign.toDoList.model.OPEN_ITEM
 import com.example.mymaterialdesign.toDoList.model.TYPE_NO_IMAGE
 import com.example.mymaterialdesign.toDoList.touchHelper.ItemTouchHelperAdapter
+import com.example.mymaterialdesign.toDoList.touchHelper.ItemTouchHelperViewAdapter
 
 class AdapterToDoListWork(
     private val onClickItemUpDownPosition: OnClickItemUpDownPosition,
@@ -80,7 +82,8 @@ class AdapterToDoListWork(
         }
     }
 
-    inner class NoImageItemViewHolder(view: View) : BaseOnBindViewHolder(view) {
+    inner class NoImageItemViewHolder(view: View) : BaseOnBindViewHolder(view),
+        ItemTouchHelperViewAdapter {
         override fun onBind(listItem: Pair<Boolean, ListWork>) {
             ItemToDoListBinding.bind(itemView).apply {
                 nameNote.text = listItem.second.nameWork
@@ -108,10 +111,19 @@ class AdapterToDoListWork(
                 }
             }
         }
+
+        override fun onItemSelected() {
+            itemView.setBackgroundColor(Color.LTGRAY)
+        }
+
+        override fun onItemClear() {
+            itemView.setBackgroundColor(0)
+        }
     }
 
 
-    inner class ImageItemViewHolder(view: View) : BaseOnBindViewHolder(view) {
+    inner class ImageItemViewHolder(view: View) : BaseOnBindViewHolder(view),
+        ItemTouchHelperViewAdapter {
         override fun onBind(listItem: Pair<Boolean, ListWork>) {
             ItemToDoListIcImageBinding.bind(itemView).apply {
                 nameNote.text = listItem.second.nameWork
@@ -134,6 +146,14 @@ class AdapterToDoListWork(
                 }
             }
         }
+
+        override fun onItemSelected() {
+            itemView.setBackgroundColor(Color.LTGRAY)
+        }
+
+        override fun onItemClear() {
+            itemView.setBackgroundColor(0)
+        }
     }
 
     abstract class BaseOnBindViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -151,5 +171,6 @@ class AdapterToDoListWork(
         dataListWork.removeAt(position)
         notifyItemRemoved(position)
     }
+
 
 }
