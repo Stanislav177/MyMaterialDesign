@@ -3,15 +3,16 @@ package com.example.mymaterialdesign.toDoList.view
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.mymaterialdesign.R
 import com.example.mymaterialdesign.databinding.FragmentWorkListBinding
 import com.example.mymaterialdesign.toDoList.model.CLOSE_ITEM
@@ -66,7 +67,8 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
         binding.layoutSearchWorkList.setEndIconOnClickListener {
             var searchText = binding.textSearchWorkList.text.toString()
             if (searchText == "") {
-                Toast.makeText(requireContext(), "Пусто", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Введите текст для поиска", Toast.LENGTH_LONG).show()
+                hideKeyboard(it)
             } else {
                 flagSearch = !flagSearch
                 if (flagSearch) {
@@ -75,6 +77,7 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
                             .toMutableList()
                     binding.layoutSearchWorkList.setEndIconDrawable(R.drawable.ic_close)
                     adapter.searchWorkList(searchWork)
+                    hideKeyboard(it)
                 } else {
                     searchText = ""
                     binding.textSearchWorkList.setText(searchText)
@@ -263,5 +266,11 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
             (viewHolder as ItemTouchHelperViewAdapter).onItemClear()
             super.clearView(recyclerView, viewHolder)
         }
+    }
+
+    private fun hideKeyboard(v: View) {
+        val m =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        m.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }
