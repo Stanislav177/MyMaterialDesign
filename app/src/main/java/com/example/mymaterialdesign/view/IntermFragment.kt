@@ -47,6 +47,7 @@ class IntermFragment : Fragment() {
     private fun toFragment(f: Fragment) {
         requireActivity().supportFragmentManager
             .beginTransaction()
+            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out,R.anim.slide_in,R.anim.slide_out)
             .replace(R.id.fragmentContainer, f)
             .addToBackStack("")
             .commit()
