@@ -19,6 +19,7 @@ class AdapterToDoListWork(
 ) : RecyclerView.Adapter<AdapterToDoListWork.BaseOnBindViewHolder>(), ItemTouchHelperAdapter {
 
     private var dataListWork: MutableList<Pair<Boolean, ListWork>> = arrayListOf()
+    private var searchDataListWork: List<Pair<Boolean, ListWork>> = arrayListOf()
 
     override fun getItemViewType(position: Int): Int {
         return dataListWork[position].second.viewType
@@ -26,6 +27,31 @@ class AdapterToDoListWork(
 
     fun setDataListWork(data: MutableList<Pair<Boolean, ListWork>>) {
         this.dataListWork = data
+    }
+
+    private fun setDataListSearch(data: List<Pair<Boolean, ListWork>>) {
+        this.searchDataListWork = data
+    }
+
+    fun sortedListLabel() {
+        dataListWork.sortWith { l, r ->
+            if (r.second.viewType > l.second.viewType) {
+                -1
+            } else {
+                1
+            }
+        }
+        notifyDataSetChanged()
+    }
+
+    fun sortedListName() {
+        dataListWork.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it.second.nameWork }))
+        notifyDataSetChanged()
+    }
+
+    fun searchWorkList(data: MutableList<Pair<Boolean, ListWork>>) {
+        this.dataListWork = data
+        notifyDataSetChanged()
     }
 
     fun addItemWork(itemWork: Pair<Boolean, ListWork>) {

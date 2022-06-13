@@ -31,6 +31,8 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
 
     private var flag = false
 
+    private var flagSearch = false
+
     private var listWorkData: MutableList<Pair<Boolean, ListWork>> = arrayListOf()
 
     private lateinit var adapter: AdapterToDoListWork
@@ -53,14 +55,50 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
         binding.recyclerToDoList.adapter = adapter
         initWorkList()
         adapter.setDataListWork(listWorkData)
+
         initFabBtnAddItemWork()
 
-        itemTouch = ItemTouchHelper(ItemTouchHelperCallback(adapter))
-        itemTouch.attachToRecyclerView(binding.recyclerToDoList)
+        initTouchHelper()
 
         binding.workMenu.alpha = 0f
         offClickable()
 
+        binding.layoutSearchWorkList.setEndIconOnClickListener {
+            var searchText = binding.textSearchWorkList.text.toString()
+            if (searchText == "") {
+                Toast.makeText(requireContext(), "Пусто", Toast.LENGTH_LONG).show()
+            } else {
+                flagSearch = !flagSearch
+                if (flagSearch) {
+                    val searchWork =
+                        listWorkData.filter { it.second.nameWork.contains(searchText) }
+                            .toMutableList()
+                    binding.layoutSearchWorkList.setEndIconDrawable(R.drawable.ic_close)
+                    adapter.searchWorkList(searchWork)
+                } else {
+                    searchText = ""
+                    binding.textSearchWorkList.setText(searchText)
+                    binding.layoutSearchWorkList.setEndIconDrawable(R.drawable.ic_search)
+                    adapter.searchWorkList(listWorkData)
+                }
+            }
+
+            if (flagSearch) {
+                val searchWork =
+                    listWorkData.filter { it.second.nameWork.contains(searchText) }
+                        .toMutableList()
+                binding.layoutSearchWorkList.setEndIconDrawable(R.drawable.ic_close)
+                adapter.searchWorkList(searchWork)
+            } else {
+                binding.layoutSearchWorkList.setEndIconDrawable(R.drawable.ic_search)
+                adapter.searchWorkList(listWorkData)
+            }
+        }
+    }
+
+    private fun initTouchHelper() {
+        itemTouch = ItemTouchHelper(ItemTouchHelperCallback(adapter))
+        itemTouch.attachToRecyclerView(binding.recyclerToDoList)
     }
 
     private fun offClickable() {
@@ -83,7 +121,6 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
         fabAddListWorkItem!!.setOnClickListener {
 
             flag = !flag
-
             if (flag) {
                 binding.recyclerToDoList.animate().alpha(0.8f).setDuration(2500L)
                     .setListener(object : AnimatorListenerAdapter() {
@@ -118,8 +155,12 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
 
                             }
                             binding.sortedDate.setOnClickListener { }
-                            binding.sortedName.setOnClickListener { }
-                            binding.sortedLabel.setOnClickListener { }
+                            binding.sortedName.setOnClickListener {
+                                adapter.sortedListName()
+                            }
+                            binding.sortedLabel.setOnClickListener {
+                                adapter.sortedListLabel()
+                            }
                         }
                     })
 
@@ -153,16 +194,16 @@ class WorkListFragment : Fragment(), OnClickItemUpDownPosition {
 
     private fun initWorkList() {
         listWorkData = arrayListOf(
-            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 1, "Заметка 1", "Текст заметки 1")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 2, "Заметка 2", "Текст заметки 2")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 3, "Заметка 3", "Текст заметки 3")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 4, "Заметка 4", "Текст заметки 4")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 5, "Заметка 5", "Текст заметки 5")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 6, "Заметка 6", "Текст заметки 6")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 7, "Заметка 7", "Текст заметки 7")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 8, "Заметка 8", "Текст заметки 8")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 9, "Заметка 9", "Текст заметки 9")),
-            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 10, "Заметка 10", "Текст заметки 10"))
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 1, "ааа", "Текст заметки 1")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 2, "ппп", "Текст заметки 2")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 3, "иииии", "Текст заметки 3")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 4, "ккккк", "Текст заметки 4")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 5, "ууууу", "Текст заметки 5")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 6, "еееее", "Текст заметки 6")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_NO_IMAGE, 7, "нннн", "Текст заметки 7")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 8, "гггг", "Текст заметки 8")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 9, "Ььььь", "Текст заметки 9")),
+            Pair(CLOSE_ITEM, ListWork(TYPE_YES_IMAGE, 10, "зметк", "Текст заметки 10"))
         )
     }
 
